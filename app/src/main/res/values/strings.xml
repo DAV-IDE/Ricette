@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ricette</string>
+    <string name="recipes_finder">RecipeFinder</string>
 </resources>
