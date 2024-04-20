@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
             insets
 
             // ciao professore tutto bene?
+            //bene
         }
     }
 }
