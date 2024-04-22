@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Ricette</string>
     <string name="recipes_finder">RecipeFinder</string>
-    <string name="Registrazione">Registrazione</string>
+    <string name="button_registrazione">Registrati</string>
+    <string name="button_accedi">Accedi</string>
+
 </resources>
