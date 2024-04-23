@@ -9,7 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var button: Button
+    private lateinit var buttonRegistrazione: Button
+    private lateinit var buttonAccedi: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +25,16 @@ class MainActivity : AppCompatActivity() {
             //bene
         }*/
 
-        button = findViewById(R.id.button1)
+        buttonRegistrazione = findViewById(R.id.buttonregistrati)
+        buttonAccedi = findViewById(R.id.buttonaccedi)
 
-        button.setOnClickListener {
+        buttonRegistrazione.setOnClickListener {
             val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
+            startActivity(intent)
+        }
+
+        buttonAccedi.setOnClickListener {
+            val intent = Intent (this@MainActivity, AccediActivity :: class.java)
             startActivity(intent)
         }
     }
