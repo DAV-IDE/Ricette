@@ -3,7 +3,9 @@
     <string name="recipes_finder">RecipeFinder</string>
     <string name="button_registrazione">Registrati</string>
     <string name="button_accedi">Accedi</string>
-    <string name="editText_hint_username">Nome utente o e-mail</string>
+    <string name="editText_hint_username">Numero di telefono,nome utente o e-mail</string>
     <string name="editText_hint_password">Password</string>
-
+    <string name="editText_hint_PhoneEmail">Numero di cellulare o indirizzo e-mail</string>
+    <string name="editText_hint_NameSurname">Nome e cognome</string>
+    <string name="editText_hint_NomeUtente">Nome utente</string>
 </resources>
