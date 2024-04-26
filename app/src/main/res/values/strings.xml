@@ -3,5 +3,7 @@
     <string name="recipes_finder">RecipeFinder</string>
     <string name="button_registrazione">Registrati</string>
     <string name="button_accedi">Accedi</string>
+    <string name="editText_hint_username">Nome utente o e-mail</string>
+    <string name="editText_hint_password">Password</string>
 
 </resources>
