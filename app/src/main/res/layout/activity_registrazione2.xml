@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sfondoA"
+    android:background="@drawable/sfondo"
     tools:context=".RegistrazioneActivity2">
 
     <TextView
@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_width="355dp"
         android:layout_height="184dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="36dp"
         android:orientation="vertical"
         android:padding="16dp"

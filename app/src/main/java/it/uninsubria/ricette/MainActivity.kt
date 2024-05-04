@@ -21,12 +21,10 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
 
-            // ciao professore tutto bene?
-            //bene
         }*/
 
-        buttonRegistrazione = findViewById(R.id.buttonregistrati)
-        buttonAccedi = findViewById(R.id.buttonaccedi)
+        buttonRegistrazione = findViewById(R.id.buttonMainR)
+        buttonAccedi = findViewById(R.id.buttonMainA)
 
         buttonRegistrazione.setOnClickListener {
             val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
