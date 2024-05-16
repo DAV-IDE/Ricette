@@ -14,4 +14,5 @@
     <string name="benvenuti">Benvenuti su RecipeFinder</string>
     <string name="descrizione_scelta">Divertitevi a sperimentare nuove ricette e a condivedere le vostre!</string>
     <string name="titolo_cerca">Scegli gli ingredienti</string>
+    <string name="TextViewIngredient">Ingredient</string>
 </resources>
