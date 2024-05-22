@@ -8,7 +8,7 @@ import android.widget.TextView
 class CustomAdapter (context: Context, private val ricette: List<String>) : ArrayAdapter<String>(context, 0, ricette) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.ingredienti_list_item, parent, false)
-        val textView = view.findViewById<TextView>(R.id.textView)
+        val textView = view.findViewById<TextView>(R.id.multiple_list_view)
         textView.text = ricette[position]
         return view
     }
