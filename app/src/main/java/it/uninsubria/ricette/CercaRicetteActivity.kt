@@ -10,6 +10,10 @@ import android.widget.ListView
 
 
 class CercaRicetteActivity : AppCompatActivity() {
+
+    private lateinit var listView: ListView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,7 +23,7 @@ class CercaRicetteActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val listView = findViewById<ListView>(R.id.multiple_list_view)
+        listView = findViewById(R.id.multiple_list_view)
         val ingredients = arrayListOf("Acqua", "Aceto", "Farina")
         val adapter = CustomAdapter(this, ingredients)
         listView.adapter = adapter
