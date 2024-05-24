@@ -29,6 +29,7 @@
         android:layout_width="156dp"
         android:layout_height="71dp"
         android:text="@string/button_registrazione"
+        android:onClick="Registrati"
         app:backgroundTint="#BFD34208"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -43,6 +44,7 @@
         android:layout_width="156dp"
         android:layout_height="71dp"
         android:text="@string/button_accedi"
+        android:onClick="Accedi"
         app:backgroundTint="#BFD34208"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -51,17 +53,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.778" />
 
-    <Button
-        android:id="@+id/buttonProva"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Prova"
-        android:onClick="prova"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.932" />
+<!--    <Button-->
+<!--        android:id="@+id/buttonProva"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Prova"-->
+<!--        android:onClick="prova"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.932" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

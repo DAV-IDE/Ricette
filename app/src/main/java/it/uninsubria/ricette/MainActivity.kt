@@ -14,10 +14,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var buttonRegistrazione: Button
-    private lateinit var buttonAccedi: Button
-    private lateinit var buttonProva: Button
-    private lateinit var firebaseRef : DatabaseReference
+
+    //private lateinit var firebaseRef : DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,30 +27,14 @@ class MainActivity : AppCompatActivity() {
             insets
 
         }*/
-
-        buttonRegistrazione = findViewById(R.id.buttonMainR)
-        buttonAccedi = findViewById(R.id.buttonMainA)
-        buttonProva = findViewById(R.id.buttonProva)
-
-        buttonRegistrazione.setOnClickListener {
-            val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
-            startActivity(intent)
-        }
-
-        buttonAccedi.setOnClickListener {
-            val intent = Intent (this@MainActivity, AccediActivity :: class.java)
-            startActivity(intent)
-        }
     }
 
-    fun prova(view : View){
-
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("message")
-
-       myRef.setValue("Hello, World!")
-
-
+    fun Accedi(view : View){
+        val intent = Intent (this@MainActivity, AccediActivity :: class.java)
+            startActivity(intent)
     }
-
+    fun Registrati(view: View){
+        val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
+        startActivity(intent)
+    }
 }
