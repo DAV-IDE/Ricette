@@ -29,12 +29,17 @@ class MainActivity : AppCompatActivity() {
         }*/
     }
 
-    fun Accedi(view : View){
-        val intent = Intent (this@MainActivity, AccediActivity :: class.java)
-            startActivity(intent)
+    fun accedi(view: View) {
+        val intent = Intent(this@MainActivity, AccediActivity::class.java)
+        startActivity(intent)
     }
-    fun Registrati(view: View){
+
+    fun registrati(view: View){
         val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
         startActivity(intent)
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Hello, World!")
     }
 }

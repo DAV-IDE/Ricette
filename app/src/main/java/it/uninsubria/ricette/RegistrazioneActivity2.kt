@@ -23,8 +23,8 @@ class RegistrazioneActivity2 : AppCompatActivity() {
             insets
         }
     }
-    fun registrati(view: View) {
+    fun registrazione(view: View) {
         val intent = Intent (this@RegistrazioneActivity2, SceltaActivity :: class.java)
-            startActivity(intent)
+        startActivity(intent)
     }
 }
