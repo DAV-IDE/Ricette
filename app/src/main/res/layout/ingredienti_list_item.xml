@@ -14,6 +14,10 @@
         android:textColor="@color/gradient_white"
         android:textSize="18sp" />
 
+    <CheckBox
+        android:id="@+id/ingredient_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>
