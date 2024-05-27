@@ -6,7 +6,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/ingredient_name"
+        android:id="@android:id/text1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -14,9 +14,6 @@
         android:textColor="@color/gradient_white"
         android:textSize="18sp" />
 
-    <CheckBox
-        android:id="@+id/ingredient_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>

@@ -51,7 +51,7 @@ class CercaRicetteActivity : AppCompatActivity() {
                                     "sedano", "semi di papavero", "sesamo", "spinaci", "tacchino",
                                     "timo", "tonno", "uva", "uva passa", "vaniglia", "verza", "vongole",
                                     "yogurt", "zafferano", "zenzero", "zucca", "zucchero", "zucchine")
-        val adapter : ArrayAdapter<String> = ArrayAdapter(this,android.R.layout.simple_list_item_1, ingredients)
+        val adapter : ArrayAdapter<String> = ArrayAdapter(this,android.R.layout.simple_list_item_1,android.R.id.text1,ingredients)
         listView.adapter = adapter
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
