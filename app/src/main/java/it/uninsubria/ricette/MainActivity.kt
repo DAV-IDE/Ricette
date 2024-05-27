@@ -16,15 +16,15 @@ import it.uninsubria.ricette.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    //private lateinit var firebaseRef : DatabaseReference
-    //lateinit var binding: ActivityMainBinding
+
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        //binding = ActivityMainBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -41,9 +41,9 @@ class MainActivity : AppCompatActivity() {
     fun registrati(view: View){
         val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
         startActivity(intent)
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("message")
-
-        myRef.setValue("Hello, World!")
+//        val database = FirebaseDatabase.getInstance()
+//        val myRef = database.getReference("message")
+//
+//        myRef.setValue("Hello, World!")
     }
 }
