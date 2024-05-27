@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "191836350925",
+    "firebase_url": "https://ricette-fe030-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "ricette-fe030",
+    "storage_bucket": "ricette-fe030.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191836350925:android:126173f4811ad60e713c84",
+        "android_client_info": {
+          "package_name": "it.uninsubria.ricette"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_fiGPirJCsnE02u4Bj5dgVm6vmBx1u2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
