@@ -17,29 +17,20 @@ import it.uninsubria.ricette.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     //private lateinit var firebaseRef : DatabaseReference
-    lateinit var binding: ActivityMainBinding
+    //lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        //binding = ActivityMainBinding.inflate(layoutInflater)
+        //setContentView(binding.root)
+        setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
 
         }
-
-        binding.buttonMainR.setOnClickListener {
-            val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
-            startActivity(intent)
-            val database = FirebaseDatabase.getInstance()
-            val myRef = database.getReference("message")
-
-            myRef.setValue("Hello, World!")
-        }
-
     }
 
     fun accedi(view: View) {
@@ -47,12 +38,12 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-//    fun registrati(view: View){
-////        val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
-////        startActivity(intent)
-////        val database = FirebaseDatabase.getInstance()
-////        val myRef = database.getReference("message")
-////
-////        myRef.setValue("Hello, World!")
-//    }
+    fun registrati(view: View){
+        val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
+        startActivity(intent)
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Hello, World!")
+    }
 }
