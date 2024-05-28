@@ -1,5 +1,6 @@
 package it.uninsubria.ricette
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.util.Log
+import android.view.View
 
 
 class CercaRicetteActivity : AppCompatActivity() {
@@ -103,5 +105,9 @@ class CercaRicetteActivity : AppCompatActivity() {
         } else {
             Log.e("CercaRicetteActivity", "searchMagIcon is null")
         }
+    }
+    fun scelta(view: View) {
+        val intent = Intent (this@CercaRicetteActivity, SceltaRicettaActivity :: class.java)
+        startActivity(intent)
     }
 }

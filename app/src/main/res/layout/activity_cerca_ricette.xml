@@ -27,25 +27,42 @@
 
     <SearchView
         android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="364dp"
+        android:layout_height="54dp"
         android:queryHint="Cerca ingrediente"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBenv"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/search_view_border"
+        app:layout_constraintBottom_toTopOf="@+id/multiple_list_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/multiple_list_view" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBenv" />
 
 
     <ListView
         android:id="@+id/multiple_list_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="364dp"
+        android:layout_height="552dp"
         android:cacheColorHint="@color/white"
         android:choiceMode="multipleChoice"
+        android:background="@drawable/list_item_border"
+        android:divider="@color/gradient_white"
+        android:dividerHeight="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toTopOf="@+id/textViewBenv" />
 
+    <Button
+        android:id="@+id/buttonScegliIngredienti"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="156dp"
+        android:layout_height="71dp"
+        android:text="@string/button_seleziona"
+        app:backgroundTint="#BFD34208"
+        android:onClick="scelta"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.95"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
