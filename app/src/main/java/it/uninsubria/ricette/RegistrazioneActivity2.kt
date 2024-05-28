@@ -8,8 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import it.uninsubria.ricette.databinding.ActivityRegistrazione2Binding
 
 class RegistrazioneActivity2 : AppCompatActivity() {
@@ -35,14 +34,14 @@ class RegistrazioneActivity2 : AppCompatActivity() {
     }
 
     private fun saveData() {
-        val numeroTel = binding.editTextR1.text.toString()
+        val numeroTelOrEmail = binding.editTextR1.text.toString()
         val nomeCognome = binding.editTextR2.text.toString()
         val username = binding.editTextR3.text.toString()
         val password = binding.editTextR4.text.toString()
 
         var isValid = true
 
-        if (numeroTel.isEmpty()) {
+        if (numeroTelOrEmail.isEmpty()) {
             binding.editTextR1.error = "Scrivi il tuo numero"
             isValid = false
         }
@@ -60,34 +59,59 @@ class RegistrazioneActivity2 : AppCompatActivity() {
         }
 
         if (!isValid) {
-            // Mostra un toast per notificare l'utente che ci sono errori
             Toast.makeText(applicationContext, "Compila tutti i campi", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val utenteId = firebaseRef.push().key!!
-        val utenti = UtentiRegistrati(utenteId, numeroTel, nomeCognome, username, password)
+        checkDuplicate(numeroTelOrEmail, nomeCognome, username, password)
+    }
 
-        firebaseRef.child(utenteId).setValue(utenti)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-//                    runOnUiThread {
-//                        Toast.makeText(applicationContext, "Dati memorizzati con successo", Toast.LENGTH_SHORT).show()
-//                    }
-                    val intent = Intent(this@RegistrazioneActivity2, SceltaActivity::class.java)
-                    startActivity(intent)
-               }
-                //                else {
-//                    runOnUiThread {
-//                        Toast.makeText(applicationContext, "Errore nel salvataggio dei dati", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
+    private fun checkDuplicate(numeroTelOrEmail: String, nomeCognome: String, username: String, password: String) {
+        val numeroTelQuery: Query = firebaseRef.orderByChild("numeroTelOrEmail").equalTo(numeroTelOrEmail)
+        numeroTelQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    Toast.makeText(applicationContext, "Numero di telefono già registrato", Toast.LENGTH_SHORT).show()
+                } else {
+                    val usernameQuery: Query = firebaseRef.orderByChild("username").equalTo(username)
+                    usernameQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
+                                Toast.makeText(applicationContext, "Username già registrato", Toast.LENGTH_SHORT).show()
+                            } else {
+                                // Procedi con la registrazione
+                                val utenteId = firebaseRef.push().key!!
+                                val utenti = UtentiRegistrati(utenteId, numeroTelOrEmail, nomeCognome, username, password)
+                                firebaseRef.child(utenteId).setValue(utenti)
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            Toast.makeText(applicationContext, "Dati memorizzati con successo", Toast.LENGTH_SHORT).show()
+                                            val intent = Intent(this@RegistrazioneActivity2, SceltaActivity::class.java)
+                                            startActivity(intent)
+                                        } else {
+                                            Toast.makeText(applicationContext, "Errore nel salvataggio dei dati", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Toast.makeText(applicationContext, "Errore: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(applicationContext, "Errore nella verifica: ${error.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
             }
-//            .addOnFailureListener { exception ->
-//                runOnUiThread {
-//                    Toast.makeText(applicationContext, "Errore: ${exception.message}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(applicationContext, "Errore nella verifica: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
+
+
+
 

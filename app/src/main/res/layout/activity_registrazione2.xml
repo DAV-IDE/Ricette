@@ -43,7 +43,7 @@
             android:layout_height="50dp"
             android:background="@color/gradient_white"
             android:hint="@string/editText_hint_PhoneEmail"
-            android:inputType="textEmailAddress|number"
+            android:inputType="textEmailAddress"
             android:textColorHint="#FF000000"
             android:visibility="visible"
             tools:layout_editor_absoluteX="53dp"
