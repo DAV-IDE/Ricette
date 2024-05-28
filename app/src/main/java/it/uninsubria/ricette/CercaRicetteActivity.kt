@@ -104,6 +104,4 @@ class CercaRicetteActivity : AppCompatActivity() {
             Log.e("CercaRicetteActivity", "searchMagIcon is null")
         }
     }
-
 }
-

@@ -8,6 +8,10 @@ android {
     namespace = "it.uninsubria.ricette"
     compileSdk = 34
 
+    buildFeatures{
+        viewBinding = true
+    }
+    
     defaultConfig {
         applicationId = "it.uninsubria.ricette"
         minSdk = 21
