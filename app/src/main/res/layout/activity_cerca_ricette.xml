@@ -10,7 +10,7 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textViewBenv"
+        android:id="@+id/textViewTitolo1"
         android:layout_width="327dp"
         android:layout_height="76dp"
         android:fontFamily="serif"
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/multiple_list_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBenv" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitolo1" />
 
 
     <ListView
@@ -49,7 +49,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewBenv" />
+        app:layout_constraintTop_toTopOf="@+id/textViewTitolo1" />
 
     <Button
         android:id="@+id/buttonScegliIngredienti"

@@ -41,7 +41,7 @@ class CercaRicetteActivity : AppCompatActivity() {
             "cetriolo", "chiodi di garofano", "cipolla", "coriandolo",
             "couscous", "cumino", "curcuma", "datteri", "dragoncello",
             "fagioli", "fagiolini", "farina", "fegato", "finocchio",
-            "formaggio", "fragola", "frumento", "fungi", "gelato",
+            "formaggio", "fragola", "frumento", "funghi", "gelato",
             "girasole", "granchio", "insalata", "kiwi", "lampone",
             "latte", "lattuga", "limone", "litchi", "maiale", "mais",
             "mandarino", "mango", "melanzana", "melone", "menta", "merluzzo",
