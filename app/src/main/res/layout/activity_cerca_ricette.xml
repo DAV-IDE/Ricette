@@ -35,6 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/multiple_list_view" />
 
+
     <ListView
         android:id="@+id/multiple_list_view"
         android:layout_width="0dp"

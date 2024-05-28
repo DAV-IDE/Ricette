@@ -1,14 +1,17 @@
 package it.uninsubria.ricette
 
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.widget.ListView
-import android.widget.SearchView
+import android.util.Log
+
 
 class CercaRicetteActivity : AppCompatActivity() {
 
@@ -56,7 +59,7 @@ class CercaRicetteActivity : AppCompatActivity() {
             override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
                 val view = super.getView(position, convertView, parent)
                 val textView = view.findViewById<android.widget.TextView>(android.R.id.text1)
-                textView.setTextColor(Color.WHITE) // Cambia il colore del testo qui
+                textView.setTextColor(Color.WHITE)
                 return view
             }
         }
@@ -74,6 +77,33 @@ class CercaRicetteActivity : AppCompatActivity() {
             }
         })
 
+        changeSearchViewTextColor(searchView, Color.WHITE, Color.WHITE)
+
+        changeSearchViewIconColor(searchView, Color.YELLOW)
+
         // listView.setOnItemClickListener{ }
     }
+
+    private fun changeSearchViewTextColor(searchView: SearchView, textColor: Int, hintColor: Int) {
+        val searchTextViewId = searchView.context.resources.getIdentifier("android:id/search_src_text", null, null)
+        val searchText = searchView.findViewById<android.widget.TextView>(searchTextViewId)
+        if (searchText != null) {
+            searchText.setTextColor(textColor)
+            searchText.setHintTextColor(hintColor)
+        } else {
+            Log.e("CercaRicetteActivity", "searchText is null")
+        }
+    }
+
+    private fun changeSearchViewIconColor(searchView: SearchView, color: Int) {
+        val searchMagIconId = searchView.context.resources.getIdentifier("android:id/search_mag_icon", null, null)
+        val searchMagIcon = searchView.findViewById<android.widget.ImageView>(searchMagIconId)
+        if (searchMagIcon != null) {
+            searchMagIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        } else {
+            Log.e("CercaRicetteActivity", "searchMagIcon is null")
+        }
+    }
+
 }
+
