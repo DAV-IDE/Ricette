@@ -79,7 +79,6 @@ class RegistrazioneActivity2 : AppCompatActivity() {
                             if (snapshot.exists()) {
                                 Toast.makeText(applicationContext, "Username già registrato", Toast.LENGTH_SHORT).show()
                             } else {
-                                // Procedi con la registrazione
                                 val utenteId = firebaseRef.push().key!!
                                 val utenti = UtentiRegistrati(utenteId, numeroTelOrEmail, nomeCognome, username, password)
                                 firebaseRef.child(utenteId).setValue(utenti)
@@ -111,7 +110,3 @@ class RegistrazioneActivity2 : AppCompatActivity() {
         })
     }
 }
-
-
-
-
