@@ -1,9 +1,9 @@
 package it.uninsubria.ricette
 
 data class UtentiRegistrati(
-    val id : String? = null,
-    val email : String? = null,
-    val nome : String? = null,
-    val username : String? = null,
-    val password : String? = null,
+    val id : String? ,
+    val numerotelefono : String? ,
+    val nome : String? ,
+    val username : String? ,
+    val password : String? ,
 )

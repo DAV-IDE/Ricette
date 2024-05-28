@@ -81,7 +81,7 @@ class CercaRicetteActivity : AppCompatActivity() {
 
         changeSearchViewTextColor(searchView, Color.WHITE, Color.WHITE)
 
-        changeSearchViewIconColor(searchView, Color.YELLOW)
+        changeSearchViewIconColor(searchView, Color.WHITE)
 
         // listView.setOnItemClickListener{ }
     }
