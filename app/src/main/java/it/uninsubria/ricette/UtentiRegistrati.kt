@@ -6,4 +6,6 @@ data class UtentiRegistrati(
     val nome : String? ,
     val username : String? ,
     val password : String? ,
-)
+) {
+    constructor() : this("", "", "", "", "")
+}
