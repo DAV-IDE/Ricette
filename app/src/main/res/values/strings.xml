@@ -11,10 +11,14 @@
     <string name="button_scelta_ingredienti">Cerca ricetta</string>
     <string name="button_inserisci_ricetta">Crea ricetta</string>
     <string name="button_seleziona">Seleziona</string>
+    <string name="button_carica_img">Inserisci immagine </string>
     <string name="oppure">Oppure</string>
     <string name="benvenuti">Benvenuti su RecipeFinder</string>
     <string name="descrizione_scelta">Divertitevi a sperimentare nuove ricette e a condivedere le vostre!</string>
     <string name="titolo_cerca">Scegli gli ingredienti</string>
     <string name="titolo_crea">Crea la tua ricetta</string>
     <string name="TextViewIngredient">Ingredient</string>
+    <string name="quantity">Quantità</string>
+    <string name="scegli">Ingredienti</string>
+    <string name="inserisci_procedimento">Inserisci il procedimento</string>
 </resources>
