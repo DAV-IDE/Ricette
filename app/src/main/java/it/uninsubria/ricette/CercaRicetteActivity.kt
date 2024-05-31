@@ -4,34 +4,35 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.widget.ImageView
 import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.util.Log
-import android.view.View
-
+import it.uninsubria.ricette.databinding.ActivityCercaRicetteBinding
 
 class CercaRicetteActivity : AppCompatActivity() {
 
-    private lateinit var listView: ListView
+    private lateinit var binding: ActivityCercaRicetteBinding
     private lateinit var ingredients: ArrayList<String>
-    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_cerca_ricette)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+        binding = ActivityCercaRicetteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        listView = findViewById(R.id.multiple_list_view)
-        searchView = findViewById(R.id.searchView)
+
         ingredients = arrayListOf(
             "aglio", "agnello", "albicocca", "alloro", "aloe", "ananas",
             "anatra", "aneto", "arachidi", "arancia", "asparagi",
@@ -41,7 +42,7 @@ class CercaRicetteActivity : AppCompatActivity() {
             "cetriolo", "chiodi di garofano", "cipolla", "coriandolo",
             "couscous", "cumino", "curcuma", "datteri", "dragoncello",
             "fagioli", "fagiolini", "farina", "fegato", "finocchio",
-            "formaggio", "fragola", "frumento", "funghi", "gelato",
+            "formaggio", "fragola", "frumento", "fungi", "gelato",
             "girasole", "granchio", "insalata", "kiwi", "lampone",
             "latte", "lattuga", "limone", "litchi", "maiale", "mais",
             "mandarino", "mango", "melanzana", "melone", "menta", "merluzzo",
@@ -57,18 +58,18 @@ class CercaRicetteActivity : AppCompatActivity() {
             "yogurt", "zafferano", "zenzero", "zucca", "zucchero", "zucchine"
         )
 
-        val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, android.R.id.text1, ingredients) {
+        val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, ingredients) {
             override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
                 val view = super.getView(position, convertView, parent)
                 val textView = view.findViewById<android.widget.TextView>(android.R.id.text1)
-                textView.setTextColor(Color.WHITE)
+                textView.setTextColor(Color.WHITE) // Cambia il colore del testo qui
                 return view
             }
         }
 
-        listView.adapter = adapter
+        binding.multipleListView.adapter = adapter
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
@@ -79,11 +80,11 @@ class CercaRicetteActivity : AppCompatActivity() {
             }
         })
 
-        changeSearchViewTextColor(searchView, Color.WHITE, Color.WHITE)
+        // Cambia il colore del testo della SearchView e del query hint
+        changeSearchViewTextColor(binding.searchView, Color.RED, Color.WHITE)
 
-        changeSearchViewIconColor(searchView, Color.WHITE)
-
-        //listView.setOnItemClickListener{ }
+        // Cambia il colore delle icone della SearchView
+        changeSearchViewIconColor(binding.searchView, Color.WHITE)
     }
 
     private fun changeSearchViewTextColor(searchView: SearchView, textColor: Int, hintColor: Int) {
@@ -98,16 +99,38 @@ class CercaRicetteActivity : AppCompatActivity() {
     }
 
     private fun changeSearchViewIconColor(searchView: SearchView, color: Int) {
-        val searchMagIconId = searchView.context.resources.getIdentifier("android:id/search_mag_icon", null, null)
-        val searchMagIcon = searchView.findViewById<android.widget.ImageView>(searchMagIconId)
+        // Cambia il colore della lente di ingrandimento
+        val searchMagIconId = searchView.context.resources.getIdentifier("android:id/search_button", null, null)
+        val searchMagIcon = searchView.findViewById<ImageView>(searchMagIconId)
         if (searchMagIcon != null) {
             searchMagIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
         } else {
             Log.e("CercaRicetteActivity", "searchMagIcon is null")
         }
+
+        // Cambia il colore del bottone di chiusura
+        val searchCloseIconId = searchView.context.resources.getIdentifier("android:id/search_close_btn", null, null)
+        val searchCloseIcon = searchView.findViewById<ImageView>(searchCloseIconId)
+        if (searchCloseIcon != null) {
+            searchCloseIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        } else {
+            Log.e("CercaRicetteActivity", "searchCloseIcon is null")
+        }
+
+        // Cambia il colore dell'icona del microfono
+        val searchVoiceIconId = searchView.context.resources.getIdentifier("android:id/search_voice_btn", null, null)
+        val searchVoiceIcon = searchView.findViewById<ImageView>(searchVoiceIconId)
+        if (searchVoiceIcon != null) {
+            searchVoiceIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        } else {
+            Log.e("CercaRicetteActivity", "searchVoiceIcon is null")
+        }
     }
+
     fun scelta(view: View) {
-        val intent = Intent (this@CercaRicetteActivity, SceltaRicettaActivity :: class.java)
+        val intent = Intent(this@CercaRicetteActivity, SceltaRicettaActivity::class.java)
         startActivity(intent)
     }
 }
+
+
