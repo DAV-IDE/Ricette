@@ -83,7 +83,7 @@ class CercaRicetteActivity : AppCompatActivity() {
         // Cambia il colore del testo della SearchView e del query hint
         changeSearchViewTextColor(binding.searchView, Color.RED, Color.WHITE)
 
-        // Cambia il colore delle icone della SearchView
+        // Cambia il colore di tutte le icone della SearchView
         changeSearchViewIconColor(binding.searchView, Color.WHITE)
     }
 
@@ -99,31 +99,20 @@ class CercaRicetteActivity : AppCompatActivity() {
     }
 
     private fun changeSearchViewIconColor(searchView: SearchView, color: Int) {
-        // Cambia il colore della lente di ingrandimento
-        val searchMagIconId = searchView.context.resources.getIdentifier("android:id/search_button", null, null)
-        val searchMagIcon = searchView.findViewById<ImageView>(searchMagIconId)
-        if (searchMagIcon != null) {
-            searchMagIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-        } else {
-            Log.e("CercaRicetteActivity", "searchMagIcon is null")
-        }
+        val iconIds = listOf(
+            "android:id/search_button", // Lente di ingrandimento
+            "android:id/search_close_btn", // Bottone di chiusura
+            "android:id/search_voice_btn"  // Icona del microfono
+        )
 
-        // Cambia il colore del bottone di chiusura
-        val searchCloseIconId = searchView.context.resources.getIdentifier("android:id/search_close_btn", null, null)
-        val searchCloseIcon = searchView.findViewById<ImageView>(searchCloseIconId)
-        if (searchCloseIcon != null) {
-            searchCloseIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-        } else {
-            Log.e("CercaRicetteActivity", "searchCloseIcon is null")
-        }
-
-        // Cambia il colore dell'icona del microfono
-        val searchVoiceIconId = searchView.context.resources.getIdentifier("android:id/search_voice_btn", null, null)
-        val searchVoiceIcon = searchView.findViewById<ImageView>(searchVoiceIconId)
-        if (searchVoiceIcon != null) {
-            searchVoiceIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-        } else {
-            Log.e("CercaRicetteActivity", "searchVoiceIcon is null")
+        for (iconId in iconIds) {
+            val iconViewId = searchView.context.resources.getIdentifier(iconId, null, null)
+            val iconView = searchView.findViewById<ImageView>(iconViewId)
+            if (iconView != null) {
+                iconView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+            } else {
+                Log.e("CercaRicetteActivity", "$iconId is null")
+            }
         }
     }
 
@@ -132,5 +121,6 @@ class CercaRicetteActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
+
 
 
