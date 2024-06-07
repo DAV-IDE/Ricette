@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string-array name="ingredients_array">
+            <item>Seleziona ingrediente</item>
+            <item>Acqua</item>
+            <item>Aglio</item>
+            <item>Agnello</item>
+            <item>Albicocca</item>
+            <item>Alloro</item>
+            <item>Aloe</item>
+            <item>Ananas</item>
+            <item>Anatra</item>
+            <item>Aneto</item>
+            <item>Arachidi</item>
+            <item>Arancia</item>
+            <item>Asparagi</item>
+            <item>Avocado</item>
+            <item>Basilico</item>
+            <item>Biancospino</item>
+            <item>Broccoli</item>
+            <item>Burro</item>
+            <item>Cacao</item>
+            <item>Cannella</item>
+            <item>Cardamomo</item>
+            <item>Carciofi</item>
+            <item>Carne di manzo</item>
+            <item>Carote</item>
+            <item>Cavolfiore</item>
+            <item>Cavolo</item>
+            <item>Cavolo riccio</item>
+            <item>Cedro</item>
+            <item>Cetriolo</item>
+            <item>Chiodi di garofano</item>
+            <item>Cipolla</item>
+            <item>Coriandolo</item>
+            <item>Couscous</item>
+            <item>Cumino</item>
+            <item>Curcuma</item>
+            <item>Datteri</item>
+            <item>Dragoncello</item>
+            <item>Fagioli</item>
+            <item>Fagiolini</item>
+            <item>Farina</item>
+            <item>Fegato</item>
+            <item>Finocchio</item>
+            <item>Formaggio</item>
+            <item>Fragola</item>
+            <item>Frumento</item>
+            <item>Fungi</item>
+            <item>Gelato</item>
+            <item>Girasole</item>
+            <item>Granchio</item>
+            <item>Insalata</item>
+            <item>Kiwi</item>
+            <item>Lampone</item>
+            <item>Latte</item>
+            <item>Lattuga</item>
+            <item>Limone</item>
+            <item>Litchi</item>
+            <item>Maiale</item>
+            <item>Mais</item>
+            <item>Mandarino</item>
+            <item>Mango</item>
+            <item>Melanzana</item>
+            <item>Melone</item>
+            <item>Menta</item>
+            <item>Merluzzo</item>
+            <item>Miele</item>
+            <item>Mirtilli</item>
+            <item>Nocciola</item>
+            <item>Noce</item>
+            <item>Noce moscata</item>
+            <item>Oliva</item>
+            <item>Origano</item>
+            <item>Orzo</item>
+            <item>Pane</item>
+            <item>Panna</item>
+            <item>Papaya</item>
+            <item>Paprika</item>
+            <item>Pasta</item>
+            <item>Patata</item>
+            <item>Pepe</item>
+            <item>Pepe bianco</item>
+            <item>Pepe di Cayenna</item>
+            <item>Pepe nero</item>
+            <item>Pepe rosa</item>
+            <item>Peperoncino</item>
+            <item>Peperoncino in polvere</item>
+            <item>Peperoni</item>
+            <item>Pesca</item>
+            <item>Pesce spada</item>
+            <item>Petto di pollo</item>
+            <item>Piadina</item>
+            <item>Pistacchio</item>
+            <item>Polenta</item>
+            <item>Pollo</item>
+            <item>Pomodori</item>
+            <item>Prezzemolo</item>
+            <item>Prosciutto</item>
+            <item>Prugna</item>
+            <item>Quinoa</item>
+            <item>Radicchio</item>
+            <item>Riso</item>
+            <item>Rosmarino</item>
+            <item>Salmone</item>
+            <item>Sale</item>
+            <item>Salsiccia</item>
+            <item>Sedano</item>
+            <item>Semi di papavero</item>
+            <item>Sesamo</item>
+            <item>Spinaci</item>
+            <item>Tacchino</item>
+            <item>Timo</item>
+            <item>Tonno</item>
+            <item>Uva</item>
+            <item>Uva passa</item>
+            <item>Vaniglia</item>
+            <item>Verza</item>
+            <item>Vongole</item>
+            <item>Yogurt</item>
+            <item>Zafferano</item>
+            <item>Zenzero</item>
+            <item>Zucca</item>
+            <item>Zucchero</item>
+            <item>Zucchine</item>
+        </string-array>
+</resources>

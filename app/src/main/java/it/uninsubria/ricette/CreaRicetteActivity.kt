@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.view.WindowManager
+import android.widget.AdapterView
 
 class CreaRicetteActivity : AppCompatActivity() {
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
@@ -50,34 +52,6 @@ class CreaRicetteActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-    }
-
-    private fun setupSpinner() {
-        val spinner: Spinner = findViewById(R.id.spinnerIngredients)
-        val ingredients = arrayOf("Seleziona ingrediente", "acqua","aglio", "agnello", "albicocca", "alloro", "aloe", "ananas",
-            "anatra", "aneto", "arachidi", "arancia", "asparagi",
-            "avocado", "basilico", "biancospino", "broccoli", "burro",
-            "cacao", "cannella", "cardamomo", "carciofi", "carne di manzo",
-            "carote", "cavolfiore", "cavolo", "cavolo riccio", "cedro",
-            "cetriolo", "chiodi di garofano", "cipolla", "coriandolo",
-            "couscous", "cumino", "curcuma", "datteri", "dragoncello",
-            "fagioli", "fagiolini", "farina", "fegato", "finocchio",
-            "formaggio", "fragola", "frumento", "fungi", "gelato",
-            "girasole", "granchio", "insalata", "kiwi", "lampone",
-            "latte", "lattuga", "limone", "litchi", "maiale", "mais",
-            "mandarino", "mango", "melanzana", "melone", "menta", "merluzzo",
-            "miele", "mirtilli", "nocciola", "noce", "noce moscata", "oliva",
-            "origano", "orzo", "pane", "panna", "papaya", "paprika", "pasta",
-            "patata", "pepe", "pepe bianco", "pepe di Cayenna", "pepe nero",
-            "pepe rosa", "peperoncino", "peperoncino in polvere", "peperoni",
-            "pesca", "pesce spada", "petto di pollo", "piadina", "pistacchio",
-            "polenta", "pollo", "pomodori", "prezzemolo", "prosciutto", "prugna",
-            "quinoa", "radicchio", "riso", "rosmarino", "salmone", "sale", "salsiccia",
-            "sedano", "semi di papavero", "sesamo", "spinaci", "tacchino",
-            "timo", "tonno", "uva", "uva passa", "vaniglia", "verza", "vongole",
-            "yogurt", "zafferano", "zenzero", "zucca", "zucchero", "zucchine")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, ingredients)
-        spinner.adapter = adapter
     }
 
     private fun setupImagePicker() {
@@ -113,6 +87,32 @@ class CreaRicetteActivity : AppCompatActivity() {
 
         return context.contentResolver.openInputStream(selectedImage).use { inputStream ->
             BitmapFactory.decodeStream(inputStream, null, options)
+        }
+    }
+
+    private fun setupSpinner() {
+        val spinner: Spinner = findViewById(R.id.spinnerIngredients)
+        // Crea un ArrayAdapter usando l'array di stringhe dal file di risorse
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.ingredients_array,
+            android.R.layout.simple_spinner_dropdown_item
+        )
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                if (position == 0) {
+                    Toast.makeText(applicationContext, "Per favore seleziona un ingrediente valido", Toast.LENGTH_LONG).show()
+                } else {
+                    val selectedItem = parent.getItemAtPosition(position).toString()
+                    Toast.makeText(applicationContext, "Selezionato: $selectedItem", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Opzionale: cosa fare quando non viene selezionato nulla
+            }
         }
     }
 }
