@@ -14,13 +14,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import java.text.SimpleDateFormat
-import java.util.*
 
 class CreaRicetteActivity : AppCompatActivity() {
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
@@ -33,7 +34,12 @@ class CreaRicetteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crea_ricette)
 
-        // Enable full screen content display under the system bars
+        setupFullscreen()
+        setupSpinner()
+        setupImagePicker()
+    }
+
+    private fun setupFullscreen() {
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -44,7 +50,37 @@ class CreaRicetteActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
 
+    private fun setupSpinner() {
+        val spinner: Spinner = findViewById(R.id.spinnerIngredients)
+        val ingredients = arrayOf("Seleziona ingrediente", "acqua","aglio", "agnello", "albicocca", "alloro", "aloe", "ananas",
+            "anatra", "aneto", "arachidi", "arancia", "asparagi",
+            "avocado", "basilico", "biancospino", "broccoli", "burro",
+            "cacao", "cannella", "cardamomo", "carciofi", "carne di manzo",
+            "carote", "cavolfiore", "cavolo", "cavolo riccio", "cedro",
+            "cetriolo", "chiodi di garofano", "cipolla", "coriandolo",
+            "couscous", "cumino", "curcuma", "datteri", "dragoncello",
+            "fagioli", "fagiolini", "farina", "fegato", "finocchio",
+            "formaggio", "fragola", "frumento", "fungi", "gelato",
+            "girasole", "granchio", "insalata", "kiwi", "lampone",
+            "latte", "lattuga", "limone", "litchi", "maiale", "mais",
+            "mandarino", "mango", "melanzana", "melone", "menta", "merluzzo",
+            "miele", "mirtilli", "nocciola", "noce", "noce moscata", "oliva",
+            "origano", "orzo", "pane", "panna", "papaya", "paprika", "pasta",
+            "patata", "pepe", "pepe bianco", "pepe di Cayenna", "pepe nero",
+            "pepe rosa", "peperoncino", "peperoncino in polvere", "peperoni",
+            "pesca", "pesce spada", "petto di pollo", "piadina", "pistacchio",
+            "polenta", "pollo", "pomodori", "prezzemolo", "prosciutto", "prugna",
+            "quinoa", "radicchio", "riso", "rosmarino", "salmone", "sale", "salsiccia",
+            "sedano", "semi di papavero", "sesamo", "spinaci", "tacchino",
+            "timo", "tonno", "uva", "uva passa", "vaniglia", "verza", "vongole",
+            "yogurt", "zafferano", "zenzero", "zucca", "zucchero", "zucchine")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, ingredients)
+        spinner.adapter = adapter
+    }
+
+    private fun setupImagePicker() {
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 val bitmap = decodeUriToBitmap(this, it)
@@ -62,21 +98,22 @@ class CreaRicetteActivity : AppCompatActivity() {
     }
 
     private fun decodeUriToBitmap(context: Context, selectedImage: Uri): Bitmap? {
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        var inputStream = context.contentResolver.openInputStream(selectedImage)
-        BitmapFactory.decodeStream(inputStream, null, options)
-        inputStream?.close()
+        val options = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+        }
+        context.contentResolver.openInputStream(selectedImage).use { inputStream ->
+            BitmapFactory.decodeStream(inputStream, null, options)
+        }
 
         val scaleFactor = Math.max(options.outWidth / 1024, options.outHeight / 1024)
+        options.apply {
+            inJustDecodeBounds = false
+            inSampleSize = scaleFactor
+        }
 
-        options.inJustDecodeBounds = false
-        options.inSampleSize = scaleFactor
-
-        inputStream = context.contentResolver.openInputStream(selectedImage)
-        val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
-        inputStream?.close()
-        return bitmap
+        return context.contentResolver.openInputStream(selectedImage).use { inputStream ->
+            BitmapFactory.decodeStream(inputStream, null, options)
+        }
     }
 }
 

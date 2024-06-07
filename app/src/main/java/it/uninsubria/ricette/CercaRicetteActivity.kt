@@ -34,7 +34,7 @@ class CercaRicetteActivity : AppCompatActivity() {
         }
 
         ingredients = arrayListOf(
-            "aglio", "agnello", "albicocca", "alloro", "aloe", "ananas",
+            "acqua","aglio", "agnello", "albicocca", "alloro", "aloe", "ananas",
             "anatra", "aneto", "arachidi", "arancia", "asparagi",
             "avocado", "basilico", "biancospino", "broccoli", "burro",
             "cacao", "cannella", "cardamomo", "carciofi", "carne di manzo",
