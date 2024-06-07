@@ -58,11 +58,11 @@ class CercaRicetteActivity : AppCompatActivity() {
             "yogurt", "zafferano", "zenzero", "zucca", "zucchero", "zucchine"
         )
 
-        val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, ingredients) {
+        val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, android.R.id.text1, ingredients) {
             override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
                 val view = super.getView(position, convertView, parent)
                 val textView = view.findViewById<android.widget.TextView>(android.R.id.text1)
-                textView.setTextColor(Color.WHITE) // Cambia il colore del testo qui
+                textView.setTextColor(Color.WHITE)
                 return view
             }
         }
@@ -80,10 +80,8 @@ class CercaRicetteActivity : AppCompatActivity() {
             }
         })
 
-        // Cambia il colore del testo della SearchView e del query hint
-        changeSearchViewTextColor(binding.searchView, Color.RED, Color.WHITE)
+        changeSearchViewTextColor(binding.searchView, Color.WHITE, Color.WHITE)
 
-        // Cambia il colore di tutte le icone della SearchView
         changeSearchViewIconColor(binding.searchView, Color.WHITE)
     }
 
