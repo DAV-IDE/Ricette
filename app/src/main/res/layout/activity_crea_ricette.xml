@@ -89,7 +89,7 @@
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="44dp"
-        android:background="@drawable/ingredient_border"
+        android:background="@drawable/background_spinner_with_icon"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toStartOf="@+id/editTextQuantity"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,14 +98,25 @@
 
     <EditText
         android:id="@+id/editTextQuantity"
-        android:layout_width="200dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginTop="44dp"
         android:background="@drawable/ingredient_border"
         android:inputType="numberDecimal"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/spinnerUnitMisura"
         app:layout_constraintStart_toEndOf="@+id/spinnerIngredients"
+        app:layout_constraintTop_toBottomOf="@id/labelQuantity"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <Spinner
+        android:id="@+id/spinnerUnitMisura"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/background_spinner_with_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editTextQuantity"
         app:layout_constraintTop_toBottomOf="@id/labelQuantity"
         app:layout_constraintWidth_percent="0.5" />
 

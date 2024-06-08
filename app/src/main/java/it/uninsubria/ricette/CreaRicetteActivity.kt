@@ -36,9 +36,11 @@ class CreaRicetteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crea_ricette)
 
-        setupSpinner()
+        setupSpinnerIngredients()
+        setupSpinnerUnit()
         setupImagePicker()
     }
+
 
 
     private fun setupImagePicker() {
@@ -77,14 +79,10 @@ class CreaRicetteActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupSpinner() {
+    private fun setupSpinnerIngredients() {
         val spinner: Spinner = findViewById(R.id.spinnerIngredients)
-        // Crea un ArrayAdapter usando l'array di stringhe dal file di risorse
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.ingredients_array,
-            android.R.layout.simple_spinner_dropdown_item
-        )
+
+        val adapter = ArrayAdapter.createFromResource(this, R.array.ingredients_array, android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -101,6 +99,12 @@ class CreaRicetteActivity : AppCompatActivity() {
                 // Opzionale: cosa fare quando non viene selezionato nulla
             }
         }
+    }
+    private fun setupSpinnerUnit() {
+        val spinner: Spinner = findViewById(R.id.spinnerUnitMisura)
+
+        val adapter =ArrayAdapter.createFromResource(this, R.array.units_array, android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter=adapter
     }
 }
 
