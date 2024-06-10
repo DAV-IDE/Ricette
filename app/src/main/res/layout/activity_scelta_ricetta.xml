@@ -7,36 +7,89 @@
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/sfondo"
-    tools:context=".SceltaRicettaActivity">
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sfondo"
+        tools:context=".SceltaRicettaActivity">
 
-    <TextView
-        android:id="@+id/textViewTitolo3"
-        android:layout_width="327dp"
-        android:layout_height="76dp"
-        android:fontFamily="serif"
-        android:text="@string/titolo_scelta_ricetta"
-        android:textAlignment="center"
-        android:textColor="@color/gradient_white"
-        android:textSize="26.4sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07"/>
+        <TextView
+            android:id="@+id/textViewTitolo3"
+            android:layout_width="327dp"
+            android:layout_height="76dp"
+            android:fontFamily="serif"
+            android:text="@string/titolo_scelta_ricetta"
+            android:textAlignment="center"
+            android:textColor="@color/gradient_white"
+            android:textSize="26.4sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.07" />
 
-        <FrameLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="380dp"
             android:layout_height="180dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewTitolo3"/>
+            app:layout_constraintTop_toBottomOf="@id/textViewTitolo3"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageViewRicetta"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/sfondo" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/imageViewRicetta"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/textViewNomeRicetta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:text="Nome della Ricetta"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+                    <TextView
+                        android:id="@+id/textViewNomeUtente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="Nome Utente"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/buttonPreferito"
+                    android:layout_width="45dp"
+                    android:layout_height="66dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/selettore_preferiti"
+                    android:src="@drawable/star" />
 
 
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

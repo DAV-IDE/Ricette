@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#BFD34208</color>
     <color name="gradient_white">#C9F8F3F1</color>
+    <color name="yellow">#FFD003</color>
 </resources>
