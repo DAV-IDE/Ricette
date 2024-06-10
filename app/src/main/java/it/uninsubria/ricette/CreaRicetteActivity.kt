@@ -151,25 +151,28 @@ class CreaRicetteActivity : AppCompatActivity() {
         spinner.adapter = adapter
     }
 
+    fun Int.dpToPx(): Int {
+        val density = this@CreaRicetteActivity.resources.displayMetrics.density
+        return (this * density).toInt()
+    }
+
     private fun addNewComponents() {
-        val newSpinnerIngredients = createSpinner(R.array.ingredients_array)
+        val newSpinnerIngredients = createSpinner(R.array.ingredients_array, 200)
         layout.addView(newSpinnerIngredients)
 
-        val newEditTextQuantity = createEditText()
+        val newEditTextQuantity = createEditText(100)
         layout.addView(newEditTextQuantity)
 
-        val newSpinnerUnits = createSpinner(R.array.units_array)
+        val newSpinnerUnits = createSpinner(R.array.units_array, 60)
         layout.addView(newSpinnerUnits)
 
         applyConstraints(newSpinnerIngredients, newEditTextQuantity, newSpinnerUnits)
     }
 
-    private fun createSpinner(arrayResId: Int): Spinner {
+    private fun createSpinner(arrayResId: Int, width: Int): Spinner {
         return Spinner(this).apply {
             id = View.generateViewId()
-            layoutParams =
-                ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.MATCH_CONSTRAINT)
-            setPadding(0, 16, 0, 16)
+            layoutParams = ConstraintLayout.LayoutParams(width.dpToPx(), 40.dpToPx())
             adapter = ArrayAdapter.createFromResource(
                 this@CreaRicetteActivity,
                 arrayResId,
@@ -182,16 +185,13 @@ class CreaRicetteActivity : AppCompatActivity() {
         }
     }
 
-    private fun createEditText(): EditText {
+    private fun createEditText(width: Int): EditText {
         return EditText(this).apply {
             id = View.generateViewId()
-            layoutParams =
-                ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.MATCH_CONSTRAINT)
+            layoutParams = ConstraintLayout.LayoutParams(width.dpToPx(), 40.dpToPx())
             inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-            background =
-                ContextCompat.getDrawable(this@CreaRicetteActivity, R.drawable.ingredient_border)
+            background = ContextCompat.getDrawable(this@CreaRicetteActivity, R.drawable.ingredient_border)
             setTextColor(ContextCompat.getColor(this@CreaRicetteActivity, R.color.black))
-            setPadding(0, 16, 0, 16)
         }
     }
 
@@ -212,21 +212,30 @@ class CreaRicetteActivity : AppCompatActivity() {
         )
         constraintSet.connect(
             spinnerIngredients.id,
+            ConstraintSet.END,
+            editTextQuantity.id,
+            ConstraintSet.START
+        )
+        constraintSet.connect(
+            spinnerIngredients.id,
             ConstraintSet.TOP,
             lastComponentId,
             ConstraintSet.BOTTOM,
             44  // Margine verticale tra i gruppi
         )
-        constraintSet.constrainWidth(spinnerIngredients.id, 200)
-        constraintSet.constrainHeight(spinnerIngredients.id, 40)
 
         // Connessione dell'EditText della quantità
         constraintSet.connect(
             editTextQuantity.id,
             ConstraintSet.START,
             spinnerIngredients.id,
+            ConstraintSet.END
+        )
+        constraintSet.connect(
+            editTextQuantity.id,
             ConstraintSet.END,
-            8  // Margine orizzontale tra gli elementi
+            spinnerUnits.id,
+            ConstraintSet.START
         )
         constraintSet.connect(
             editTextQuantity.id,
@@ -234,22 +243,13 @@ class CreaRicetteActivity : AppCompatActivity() {
             spinnerIngredients.id,
             ConstraintSet.TOP
         )
-        constraintSet.constrainWidth(editTextQuantity.id, 100)
-        constraintSet.constrainHeight(editTextQuantity.id, 40)
 
         // Connessione dello Spinner delle unità di misura
         constraintSet.connect(
             spinnerUnits.id,
             ConstraintSet.START,
             editTextQuantity.id,
-            ConstraintSet.END,
-            8  // Margine orizzontale tra gli elementi
-        )
-        constraintSet.connect(
-            spinnerUnits.id,
-            ConstraintSet.TOP,
-            editTextQuantity.id,
-            ConstraintSet.TOP
+            ConstraintSet.END
         )
         constraintSet.connect(
             spinnerUnits.id,
@@ -257,30 +257,29 @@ class CreaRicetteActivity : AppCompatActivity() {
             ConstraintSet.PARENT_ID,
             ConstraintSet.END
         )
-        constraintSet.constrainWidth(spinnerUnits.id, 60)
-        constraintSet.constrainHeight(spinnerUnits.id, 40)
+        constraintSet.connect(
+            spinnerUnits.id,
+            ConstraintSet.TOP,
+            editTextQuantity.id,
+            ConstraintSet.TOP
+        )
 
-        // Applica i vincoli ai nuovi componenti
-        constraintSet.applyTo(layout)
+        // Aggiorna i vincoli per addButton per spostarlo sotto l'ultimo spinner unit
+        constraintSet.connect(
+            R.id.addButton,
+            ConstraintSet.TOP,
+            spinnerUnits.id,
+            ConstraintSet.BOTTOM,
+            20  // Margine di 20dp dall'ultimo componente
+        )
 
-        // Aggiorna l'ultimo componente aggiunto per posizionare correttamente i successivi
-        lastComponentId = spinnerUnits.id
-
-        // Aggiorna i vincoli per textViewProcedimento e editTextProcedimento
-        updateProcedimentoConstraints()
-    }
-
-    private fun updateProcedimentoConstraints() {
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(layout)
-
-        // Aggiorna il vincolo di textViewProcedimento per ancorarlo sotto l'ultimo componente inserito
+        // Aggiorna il vincolo di textViewProcedimento per ancorarlo sotto addButton
         constraintSet.connect(
             R.id.textViewProcedimento,
             ConstraintSet.TOP,
-            lastComponentId,
+            R.id.addButton,
             ConstraintSet.BOTTOM,
-            20  // Margine di 20dp dall'ultimo componente
+            20  // Margine di 20dp da addButton
         )
 
         // Aggiorna il vincolo di editTextProcedimento per ancorarlo sotto textViewProcedimento
@@ -292,8 +291,13 @@ class CreaRicetteActivity : AppCompatActivity() {
             8  // Margine di 8dp da textViewProcedimento
         )
 
+        // Applica i vincoli ai nuovi componenti
         constraintSet.applyTo(layout)
+
+        // Aggiorna l'ultimo componente aggiunto per posizionare correttamente i successivi
+        lastComponentId = spinnerUnits.id
     }
+
 
 
 }

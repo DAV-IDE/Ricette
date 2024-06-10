@@ -169,5 +169,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewProcedimento" />
 
+    <Button
+        android:id="@+id/buttonCondividi"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="156dp"
+        android:layout_height="71dp"
+        android:text="@string/button_condividi_ricetta"
+        app:backgroundTint="#BFD34208"
+        app:layout_constraintTop_toTopOf="@id/editTextProcedimento"
+        app:layout_constraintBottom_toBottomOf="@id/editTextProcedimento"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.95"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
