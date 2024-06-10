@@ -8,6 +8,7 @@
     <string name="editText_hint_PhoneEmail">Numero di cellulare o indirizzo e-mail</string>
     <string name="editText_hint_NameSurname">Nome e cognome</string>
     <string name="editText_hint_NomeUtente">Nome utente</string>
+    <string name="titolo_scelta_ricetta">Esplora le ricette</string>
     <string name="button_scelta_ingredienti">Cerca ricetta</string>
     <string name="button_inserisci_ricetta">Crea ricetta</string>
     <string name="button_seleziona">Seleziona</string>
