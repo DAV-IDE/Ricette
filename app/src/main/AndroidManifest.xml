@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Ricette"
         tools:targetApi="31">
         <activity
+            android:name=".ProfiloUtenteActivity"
+            android:exported="false" />
+        <activity
             android:name=".RicettaActivity"
             android:exported="false" />
         <activity
