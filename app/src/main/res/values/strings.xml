@@ -19,6 +19,7 @@
     <string name="descrizione_scelta">Divertitevi a sperimentare nuove ricette e a condivedere le vostre!</string>
     <string name="titolo_cerca">Scegli gli ingredienti</string>
     <string name="titolo_crea">Crea la tua ricetta</string>
+    <string name="show_procedimento">Procedimento</string>
     <string name="TextViewIngredient">Ingredient</string>
     <string name="quantity">Quantità</string>
     <string name="scegli">Ingredienti</string>

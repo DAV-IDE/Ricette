@@ -99,40 +99,71 @@
 
 
         <TextView
-            android:id="@+id/textViewShowI2"
+            android:id="@+id/textViewIngredientsDB"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginTop="44dp"
             android:background="@drawable/ingredient_border"
-            app:layout_constraintEnd_toStartOf="@+id/textViewShowQ2"
+            app:layout_constraintEnd_toStartOf="@+id/textViewQuantityDB"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewShowIngredients"
             app:layout_constraintWidth_percent="0.5" />
 
         <TextView
-            android:id="@+id/textViewShowQ2"
+            android:id="@+id/textViewQuantityDB"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="44dp"
             android:inputType="numberDecimal"
             android:textColor="@color/black"
             android:background="@drawable/ingredient_border"
-            app:layout_constraintEnd_toEndOf="@id/textViewUnitMisura"
-            app:layout_constraintStart_toEndOf="@+id/textViewShowI2"
+            app:layout_constraintEnd_toEndOf="@id/textViewUnitMisuraDB"
+            app:layout_constraintStart_toEndOf="@+id/textViewIngredientsDB"
             app:layout_constraintTop_toBottomOf="@id/textViewShowQuantity"
             app:layout_constraintWidth_percent="0.5" />
 
         <TextView
-            android:id="@+id/textViewUnitMisura"
+            android:id="@+id/textViewUnitMisuraDB"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginTop="44dp"
             android:background="@drawable/ingredient_border"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/textViewShowQ2"
+            app:layout_constraintStart_toEndOf="@id/textViewQuantityDB"
             app:layout_constraintTop_toBottomOf="@id/textViewShowQuantity"
             app:layout_constraintWidth_percent="0.5"/>
 
+        <TextView
+            android:id="@+id/textViewShowProcedimento"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="serif"
+            android:text="@string/show_procedimento"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewIngredientsDB"
+            android:paddingTop="20dp"/>
+
+        <TextView
+            android:id="@+id/textViewPDB"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ingredient_border"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewShowProcedimento"/>
 
 
 
