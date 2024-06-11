@@ -29,6 +29,8 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/selettore_preferiti"
             android:src="@drawable/star2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="349dp"
             tools:layout_editor_absoluteY="0dp" />
 
