@@ -14,6 +14,8 @@
     <string name="button_seleziona">Seleziona</string>
     <string name="button_carica_img">Inserisci immagine </string>
     <string name="button_condividi_ricetta">Crea e condividi</string>
+    <string name="button_mie_ricette_profilo">Le mie ricette</string>
+    <string name="button_preferiti_profilo">Ricette preferite</string>
     <string name="oppure">Oppure</string>
     <string name="benvenuti">Benvenuti su RecipeFinder</string>
     <string name="descrizione_scelta">Divertitevi a sperimentare nuove ricette e a condivedere le vostre!</string>
