@@ -172,6 +172,7 @@
             android:background="@drawable/ingredient_border"
             android:inputType="textMultiLine"
             android:textColor="@color/black"
+            android:gravity="top|start"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -177,6 +177,7 @@
             android:background="@drawable/ingredient_border"
             android:hint="@string/inserisci_procedimento"
             android:inputType="textMultiLine"
+            android:gravity="top|start"
             android:textColor="@color/black"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
