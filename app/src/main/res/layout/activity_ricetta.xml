@@ -166,7 +166,8 @@
         <TextView
             android:id="@+id/textViewPDB"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/ingredient_border"
             android:inputType="textMultiLine"
