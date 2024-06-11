@@ -27,7 +27,7 @@
             android:id="@+id/imageViewProfiloIcon"
             android:layout_width="134dp"
             android:layout_height="140dp"
-            android:src="@drawable/profiloIcon"
+            android:src="@drawable/profilo_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
