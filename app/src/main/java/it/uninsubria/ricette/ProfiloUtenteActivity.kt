@@ -19,6 +19,15 @@ class ProfiloUtenteActivity : AppCompatActivity() {
             insets
         }
     }
+    fun apriMieR(view: View) {
+        val intent = Intent (this@ProfiloUtenteActivity, MieRicetteActivity :: class.java)
+        startActivity(intent)
+    }
+
+    fun apriPreferite(view: View){
+        val intent = Intent(this@ProfiloUtenteActivity, PreferiteActivity :: class.java)
+        startActivity(intent)
+    }
 
     fun cerca(view: View) {
         val intent = Intent (this@ProfiloUtenteActivity, CercaRicetteActivity :: class.java)

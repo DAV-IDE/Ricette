@@ -18,6 +18,12 @@
         android:theme="@style/Theme.Ricette"
         tools:targetApi="31">
         <activity
+            android:name=".PreferiteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MieRicetteActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfiloUtenteActivity"
             android:exported="false" />
         <activity
