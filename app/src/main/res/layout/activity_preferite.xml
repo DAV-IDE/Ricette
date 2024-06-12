@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/sfondo"
-        tools:context=".MieRicetteActivityActivity">
+        tools:context=".SceltaRicettaActivity">
 
         <TextView
             android:id="@+id/textViewTitolo7"
@@ -68,7 +68,27 @@
                         android:text="Nome della Ricetta"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
+                    <TextView
+                        android:id="@+id/textViewNomeUtente2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="Nome Utente"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
                 </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/buttonPreferito3"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="1dp"
+                    android:background="@drawable/selettore_preferiti"
+                    android:src="@drawable/star" />
+
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
