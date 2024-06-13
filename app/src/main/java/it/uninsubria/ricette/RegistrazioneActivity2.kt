@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import it.uninsubria.ricette.databinding.ActivityRegistrazione2Binding
 
@@ -41,8 +42,11 @@ class RegistrazioneActivity2 : AppCompatActivity() {
 
         var isValid = true
 
-        if (numeroTelOrEmail.isEmpty()) {
-            binding.editTextR1.error = "Scrivi il tuo numero"
+        val emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
+        val phonePattern = "^[0-9]{10}$"
+
+        if (numeroTelOrEmail.isEmpty() || (!numeroTelOrEmail.matches(emailPattern.toRegex()) && !numeroTelOrEmail.matches(phonePattern.toRegex()))) {
+            binding.editTextR1.error = "Scrivi un numero di telefono o un email valida"
             isValid = false
         }
         if (nomeCognome.isEmpty()) {
@@ -59,7 +63,7 @@ class RegistrazioneActivity2 : AppCompatActivity() {
         }
 
         if (!isValid) {
-            Toast.makeText(applicationContext, "Compila tutti i campi", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.main, "Compila tutti i campi", Snackbar.LENGTH_SHORT).show()
             return
         }
 
@@ -71,42 +75,57 @@ class RegistrazioneActivity2 : AppCompatActivity() {
         numeroTelQuery.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Toast.makeText(applicationContext, "Numero di telefono già registrato", Toast.LENGTH_SHORT).show()
-                } else {
-                    val usernameQuery: Query = firebaseRef.orderByChild("username").equalTo(username)
-                    usernameQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if (snapshot.exists()) {
-                                Toast.makeText(applicationContext, "Username già registrato", Toast.LENGTH_SHORT).show()
-                            } else {
-                                val utenteId = firebaseRef.push().key!!
-                                val utenti = UtentiRegistrati(utenteId, numeroTelOrEmail, nomeCognome, username, password)
-                                firebaseRef.child(utenteId).setValue(utenti)
-                                    .addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            Toast.makeText(applicationContext, "Dati memorizzati con successo", Toast.LENGTH_SHORT).show()
-                                            val intent = Intent(this@RegistrazioneActivity2, SceltaActivity::class.java)
-                                            startActivity(intent)
-                                        } else {
-                                            Toast.makeText(applicationContext, "Errore nel salvataggio dei dati", Toast.LENGTH_SHORT).show()
-                                        }
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        Toast.makeText(applicationContext, "Errore: ${exception.message}", Toast.LENGTH_SHORT).show()
-                                    }
-                            }
-                        }
+                    Snackbar.make(binding.main, "Numero di telefono o email già registrato", Snackbar.LENGTH_SHORT).show()
 
-                        override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(applicationContext, "Errore nella verifica: ${error.message}", Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                } else {
+                    // Continua a verificare l'username solo se il numero di telefono o l'email non sono già registrati
+                    checkUsername(username, numeroTelOrEmail, nomeCognome, password)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Errore nella verifica: ${error.message}", Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.main, "Errore nella verifica del numero di telefono/email: ${error.message}", Snackbar.LENGTH_LONG).show()
             }
         })
     }
+
+    private fun checkUsername(username: String, numeroTelOrEmail: String, nomeCognome: String, password: String) {
+        val usernameQuery: Query = firebaseRef.orderByChild("username").equalTo(username)
+        usernameQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    Snackbar.make(binding.main, "Username già registrato", Snackbar.LENGTH_SHORT).show()
+
+                } else {
+                    // Procedi con la registrazione se anche l'username non è duplicato
+                    registerUser(numeroTelOrEmail, nomeCognome, username, password)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Snackbar.make(binding.main, "Errore nella verifica dell'username: ${error.message}", Snackbar.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun registerUser(numeroTelOrEmail: String, nomeCognome: String, username: String, password: String) {
+        val utenteId = firebaseRef.push().key!!
+        val utenti = UtentiRegistrati(utenteId, numeroTelOrEmail, nomeCognome, username, password)
+        firebaseRef.child(utenteId).setValue(utenti)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Snackbar.make(binding.main, "Dati memorizzati con successo", Snackbar.LENGTH_SHORT).show()
+
+                    val intent = Intent(this@RegistrazioneActivity2, SceltaActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Snackbar.make(binding.main, "Errore nel salvataggio dei dati", Snackbar.LENGTH_SHORT).show()
+
+                }
+            }
+            .addOnFailureListener { exception ->
+                Snackbar.make(binding.main, "Errore: ${exception.message}", Snackbar.LENGTH_SHORT).show()
+            }
+    }
+
 }
