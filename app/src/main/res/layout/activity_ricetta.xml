@@ -43,7 +43,7 @@
             android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintHorizontal_bias="0.10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.065" />
@@ -57,14 +57,14 @@
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintHorizontal_bias="0.10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.11" />
 
         <ImageView
             android:id="@+id/imageViewFromDB"
-            android:layout_width="0dp"
+            android:layout_width="395dp"
             android:layout_height="250dp"
             android:background="@drawable/list_item_border"
             android:scaleType="fitCenter"
@@ -115,7 +115,7 @@
             android:id="@+id/textViewIngredientsDB"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/ingredient_border"
             app:layout_constraintEnd_toStartOf="@+id/textViewQuantityDB"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +126,7 @@
             android:id="@+id/textViewQuantityDB"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="30dp"
             android:inputType="numberDecimal"
             android:textColor="@color/black"
             android:background="@drawable/ingredient_border"
@@ -139,7 +139,7 @@
             android:id="@+id/textViewUnitMisuraDB"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/ingredient_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/textViewQuantityDB"
@@ -167,7 +167,7 @@
 
         <TextView
             android:id="@+id/textViewPDB"
-            android:layout_width="0dp"
+            android:layout_width="395dp"
             android:layout_height="wrap_content"
             android:minHeight="200dp"
             android:layout_marginTop="8dp"

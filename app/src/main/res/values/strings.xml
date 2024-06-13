@@ -8,6 +8,7 @@
     <string name="editText_hint_PhoneEmail">Numero di cellulare o indirizzo e-mail</string>
     <string name="editText_hint_NameSurname">Nome e cognome</string>
     <string name="editText_hint_NomeUtente">Nome utente</string>
+    <string name="editText_Nome_Ricetta">Inserisci il nome della ricetta</string>
     <string name="button_scelta_mio_profilo">Profilo utente</string>
     <string name="titolo_scelta_ricetta">Esplora le ricette</string>
     <string name="button_scelta_ingredienti">Cerca ricetta</string>
@@ -26,6 +27,7 @@
     <string name="titolo_preferite">Preferite</string>
     <string name="show_procedimento">Procedimento</string>
     <string name="TextViewIngredient">Ingredient</string>
+    <string name="nomeRicetta">Nome ricetta</string>
     <string name="quantity">Quantità</string>
     <string name="scegli">Ingredienti</string>
     <string name="inserisci_procedimento">Inserisci il procedimento</string>

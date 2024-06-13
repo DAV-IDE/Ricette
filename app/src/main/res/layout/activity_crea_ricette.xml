@@ -24,7 +24,7 @@
         <TextView
             android:id="@+id/textViewTitolo2"
             android:layout_width="327dp"
-            android:layout_height="76dp"
+            android:layout_height="70dp"
             android:fontFamily="serif"
             android:text="@string/titolo_crea"
             android:textAlignment="center"
@@ -37,16 +37,50 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.07" />
 
+        <TextView
+            android:id="@+id/labelNomeRicetta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="@string/nomeRicetta"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="3"
+            android:layout_marginStart="7dp"
+            app:layout_constraintEnd_toStartOf="@+id/labelQuantity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/editTextNomeRicetta"
+            app:layout_constraintTop_toBottomOf="@id/textViewTitolo2"/>
+
+        <EditText
+            android:id="@+id/editTextNomeRicetta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ingredient_border"
+            android:hint="@string/editText_Nome_Ricetta"
+            android:inputType="textMultiLine"
+            android:gravity="top|start"
+            android:textColor="@color/black"
+            android:padding="12dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelNomeRicetta" />
+
         <ImageView
             android:id="@+id/uploadedImage"
-            android:layout_width="0dp"
+            android:layout_width="395dp"
             android:layout_height="250dp"
             android:background="@drawable/list_item_border"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewTitolo2"
+            app:layout_constraintTop_toBottomOf="@id/editTextNomeRicetta"
             app:layout_constraintVertical_bias="0.05" />
 
         <Button
@@ -59,6 +93,7 @@
             app:layout_constraintEnd_toEndOf="@id/uploadedImage"
             app:layout_constraintStart_toStartOf="@id/uploadedImage"
             app:layout_constraintTop_toTopOf="@id/uploadedImage" />
+
 
 
         <TextView
@@ -101,7 +136,7 @@
             android:id="@+id/spinnerIngredients"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/background_spinner_with_icon"
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toStartOf="@+id/editTextQuantity"
@@ -113,7 +148,7 @@
             android:id="@+id/editTextQuantity"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/ingredient_border"
             android:inputType="numberDecimal"
             android:textColor="@color/black"
@@ -126,7 +161,7 @@
             android:id="@+id/spinnerUnitMisura"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/background_spinner_with_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/editTextQuantity"
@@ -170,7 +205,7 @@
 
         <EditText
             android:id="@+id/editTextProcedimento"
-            android:layout_width="0dp"
+            android:layout_width="395dp"
             android:layout_height="wrap_content"
             android:minHeight="200dp"
             android:layout_marginTop="8dp"
