@@ -49,8 +49,8 @@ class RegistrazioneActivity2 : AppCompatActivity() {
             binding.editTextR1.error = "Scrivi un numero di telefono o un email valida"
             isValid = false
         }
-        if (nomeCognome.isEmpty()) {
-            binding.editTextR2.error = "Scrivi il tuo nome"
+        if (nomeCognome.isEmpty() || nomeCognome.split(" ").size < 2) {
+            binding.editTextR2.error = "Inserisci nome e cognome completi"
             isValid = false
         }
         if (username.isEmpty()) {
