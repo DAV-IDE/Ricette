@@ -22,6 +22,10 @@ class SceltaActivity : AppCompatActivity() {
         }
     }
 
+    fun sceltaProfilo(view: View) {
+        val intent = Intent (this@SceltaActivity, ProfiloUtenteActivity :: class.java)
+        startActivity(intent)
+    }
     fun cerca(view: View) {
         val intent = Intent (this@SceltaActivity, CercaRicetteActivity :: class.java)
         startActivity(intent)
