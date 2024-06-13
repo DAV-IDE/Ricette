@@ -42,7 +42,7 @@ class RegistrazioneActivity2 : AppCompatActivity() {
 
         var isValid = true
 
-        val emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
+        val emailPattern = "^[A-Za-z][A-Za-z0-9]*@[A-Za-z0-9]+\\.[A-Za-z]+$"
         val phonePattern = "^[0-9]{10}$"
 
         if (numeroTelOrEmail.isEmpty() || (!numeroTelOrEmail.matches(emailPattern.toRegex()) && !numeroTelOrEmail.matches(phonePattern.toRegex()))) {
@@ -75,7 +75,7 @@ class RegistrazioneActivity2 : AppCompatActivity() {
         numeroTelQuery.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Snackbar.make(binding.main, "Numero di telefono o email già registrato", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.main, "Numero di telefono o email già associato a un altro account", Snackbar.LENGTH_SHORT).show()
 
                 } else {
                     // Continua a verificare l'username solo se il numero di telefono o l'email non sono già registrati
@@ -94,7 +94,7 @@ class RegistrazioneActivity2 : AppCompatActivity() {
         usernameQuery.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Snackbar.make(binding.main, "Username già registrato", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.main, "Username già associato a un altro account", Snackbar.LENGTH_SHORT).show()
 
                 } else {
                     // Procedi con la registrazione se anche l'username non è duplicato
