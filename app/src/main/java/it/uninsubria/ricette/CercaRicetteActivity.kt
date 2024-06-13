@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,8 @@ class CercaRicetteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCercaRicetteBinding
     private lateinit var ingredients: ArrayList<String>
+    private val maxSelectableIngredients = 5
+    private val selectedIngredients = mutableSetOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +71,20 @@ class CercaRicetteActivity : AppCompatActivity() {
         }
 
         binding.multipleListView.adapter = adapter
+        binding.multipleListView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
+        binding.multipleListView.setOnItemClickListener { parent, view, position, id ->
+            val ingredient = ingredients[position]
+            if (selectedIngredients.contains(ingredient)) {
+                selectedIngredients.remove(ingredient)
+            } else {
+                if (selectedIngredients.size < maxSelectableIngredients) {
+                    selectedIngredients.add(ingredient)
+                } else {
+                    binding.multipleListView.setItemChecked(position, false)
+                    Log.e("CercaRicetteActivity", "Puoi selezionare un massimo di $maxSelectableIngredients ingredienti")
+                }
+            }
+        }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -92,7 +109,7 @@ class CercaRicetteActivity : AppCompatActivity() {
             searchText.setTextColor(textColor)
             searchText.setHintTextColor(hintColor)
         } else {
-            Log.e("CercaRicetteActivity", "searchText is null")
+            Log.e("CercaRicetteActivity", "searchText è null")
         }
     }
 
@@ -109,7 +126,7 @@ class CercaRicetteActivity : AppCompatActivity() {
             if (iconView != null) {
                 iconView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
             } else {
-                Log.e("CercaRicetteActivity", "$iconId is null")
+                Log.e("CercaRicetteActivity", "$iconId è null")
             }
         }
     }
@@ -119,6 +136,7 @@ class CercaRicetteActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
+
 
 
 
