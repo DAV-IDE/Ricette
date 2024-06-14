@@ -46,10 +46,9 @@ class AccediActivity : AppCompatActivity() {
             isValid = false
         }
         if (!isValid) {
-            Snackbar.make(binding.main, "Compila tutti i campi", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.main, "Compila tutti i campi", Snackbar.LENGTH_SHORT).show()
             return
         }
-
 
         val query: Query = firebaseRef.orderByChild("username").equalTo(username)
         query.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -63,15 +62,16 @@ class AccediActivity : AppCompatActivity() {
                             if (utente.password == password) {
                                 Toast.makeText(applicationContext, "Accesso riuscito", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@AccediActivity, SceltaActivity::class.java)
+                                intent.putExtra("USER_ID", utente.id)
                                 startActivity(intent)
                                 finish()
                                 return
                             }
                         }
                     }
-                    Snackbar.make(binding.main, "Password errata", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(binding.main, "Password errata", Snackbar.LENGTH_SHORT).show()
                 } else {
-                    Snackbar.make(binding.main, "Utente non registrato", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(binding.main, "Utente non registrato", Snackbar.LENGTH_SHORT).show()
                 }
             }
 
@@ -81,5 +81,3 @@ class AccediActivity : AppCompatActivity() {
         })
     }
 }
-
-

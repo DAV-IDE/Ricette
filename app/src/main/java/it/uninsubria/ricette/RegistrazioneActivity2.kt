@@ -117,15 +117,14 @@ class RegistrazioneActivity2 : AppCompatActivity() {
                     Snackbar.make(binding.main, "Dati memorizzati con successo", Snackbar.LENGTH_SHORT).show()
 
                     val intent = Intent(this@RegistrazioneActivity2, SceltaActivity::class.java)
+                    intent.putExtra("USER_ID", utenteId) // Passa l'ID utente a SceltaActivity
                     startActivity(intent)
                 } else {
                     Snackbar.make(binding.main, "Errore nel salvataggio dei dati", Snackbar.LENGTH_SHORT).show()
-
                 }
             }
             .addOnFailureListener { exception ->
                 Snackbar.make(binding.main, "Errore: ${exception.message}", Snackbar.LENGTH_SHORT).show()
             }
     }
-
 }
