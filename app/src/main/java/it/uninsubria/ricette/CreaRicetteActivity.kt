@@ -28,6 +28,7 @@ import android.widget.AdapterView
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import com.google.firebase.database.FirebaseDatabase
 
 class CreaRicetteActivity : AppCompatActivity() {
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
@@ -55,6 +56,45 @@ class CreaRicetteActivity : AppCompatActivity() {
             addNewComponents()
         }
     }
+
+//    fun registraRicetta(view: View){
+//        saveRicetta()
+//    }
+//
+//    private fun saveRicetta(){
+//            val nome = findViewById<EditText>(R.id.editTextNomeRicetta).text.toString()
+//            val procedimento = findViewById<EditText>(R.id.editTextProcedimento).text.toString()
+//
+//            val ingredienti = findViewById<EditText>(R.id.spinnerIngredients).text.toString()
+//            val quantità = findViewById<EditText>(R.id.editTextQuantity).text.toString()
+//            val units = findViewById<EditText>(R.id.spinnerUnitMisura).text.toString()
+//
+//            for (i in 0 until layout.childCount) {
+//                val view = layout.getChildAt(i)
+//                if (view is Spinner && view.adapter != null && view.adapter.count > 0) {
+//                    when (view.id) {
+//                        R.id.spinnerIngredients -> ingredients.add(view.selectedItem.toString())
+//                        R.id.spinnerUnitMisura -> units.add(view.selectedItem.toString())
+//                    }
+//                } else if (view is EditText && view.inputType == (InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL)) {
+//                    quantities.add(view.text.toString())
+//                }
+//            }
+//
+//            val ricetta = Ricetta(nome, ingredients, quantità, units, procedimento)
+//
+//            val database = FirebaseDatabase.getInstance().reference
+//            val ricettaId = database.child("ricette").push().key
+//            if (ricettaId != null) {
+//                database.child("ricette").child(ricettaId).setValue(ricetta)
+//                    .addOnSuccessListener {
+//                        Toast.makeText(this, "Ricetta salvata con successo", Toast.LENGTH_SHORT).show()
+//                    }
+//                    .addOnFailureListener {
+//                        Toast.makeText(this, "Errore nel salvataggio della ricetta", Toast.LENGTH_SHORT).show()
+//                    }
+//            }
+//        }
 
     private fun setupImagePicker() {
         imagePickerLauncher =
