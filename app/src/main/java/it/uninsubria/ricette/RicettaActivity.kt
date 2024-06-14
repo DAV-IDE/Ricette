@@ -1,20 +1,23 @@
 package it.uninsubria.ricette
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import it.uninsubria.ricette.databinding.ActivityRicettaBinding
 
 class RicettaActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityRicettaBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_ricetta)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityRicettaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val ricetta = intent.getParcelableExtra<Ricette>("RICETTA")
+        if (ricetta != null) {
+            binding.textViewTitolo4.text = ricetta.nome
+            binding.textViewPDB.text = ricetta.procedimento
+            // Popola la UI con gli altri dettagli della ricetta
         }
     }
 }
