@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class SceltaActivity : AppCompatActivity() {
 
-    private var userId: String? = null
+    private var username: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,23 +22,25 @@ class SceltaActivity : AppCompatActivity() {
             insets
         }
 
-        // Recupera l'ID utente dall'intento
-        userId = intent.getStringExtra("USER_ID")
+        // Recupera lo username dall'intento
+        username = intent.getStringExtra("USERNAME")
     }
 
     fun sceltaProfilo(view: View) {
         val intent = Intent(this@SceltaActivity, ProfiloUtenteActivity::class.java)
+        intent.putExtra("USERNAME", username)
         startActivity(intent)
     }
 
     fun cerca(view: View) {
         val intent = Intent(this@SceltaActivity, CercaRicetteActivity::class.java)
+        intent.putExtra("USERNAME", username)
         startActivity(intent)
     }
 
     fun crea(view: View) {
         val intent = Intent(this@SceltaActivity, CreaRicetteActivity::class.java)
-        intent.putExtra("USER_ID", userId)
+        intent.putExtra("USERNAME", username)
         startActivity(intent)
     }
 }

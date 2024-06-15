@@ -3,7 +3,6 @@ package it.uninsubria.ricette
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -76,7 +75,6 @@ class RegistrazioneActivity2 : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     Snackbar.make(binding.main, "Numero di telefono o email già associato a un altro account", Snackbar.LENGTH_SHORT).show()
-
                 } else {
                     // Continua a verificare l'username solo se il numero di telefono o l'email non sono già registrati
                     checkUsername(username, numeroTelOrEmail, nomeCognome, password)
@@ -95,7 +93,6 @@ class RegistrazioneActivity2 : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     Snackbar.make(binding.main, "Username già associato a un altro account", Snackbar.LENGTH_SHORT).show()
-
                 } else {
                     // Procedi con la registrazione se anche l'username non è duplicato
                     registerUser(numeroTelOrEmail, nomeCognome, username, password)
@@ -117,7 +114,7 @@ class RegistrazioneActivity2 : AppCompatActivity() {
                     Snackbar.make(binding.main, "Dati memorizzati con successo", Snackbar.LENGTH_SHORT).show()
 
                     val intent = Intent(this@RegistrazioneActivity2, SceltaActivity::class.java)
-                    intent.putExtra("USER_ID", utenteId) // Passa l'ID utente a SceltaActivity
+                    intent.putExtra("USERNAME", username) // Passa lo username a SceltaActivity
                     startActivity(intent)
                 } else {
                     Snackbar.make(binding.main, "Errore nel salvataggio dei dati", Snackbar.LENGTH_SHORT).show()

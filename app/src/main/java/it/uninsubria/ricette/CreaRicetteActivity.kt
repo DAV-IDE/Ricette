@@ -1,7 +1,6 @@
 package it.uninsubria.ricette
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,32 +10,28 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.storage
 
 class CreaRicetteActivity : AppCompatActivity() {
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     private lateinit var layout: ConstraintLayout
     private var lastComponentId: Int = R.id.labelQuantity
-    private var userId: String? = null
+    private var username: String? = null
     private var selectedImageUri: Uri? = null
     private lateinit var storageReference: StorageReference
 
@@ -49,8 +44,8 @@ class CreaRicetteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_crea_ricette)
 
         layout = findViewById(R.id.main)
-        userId = intent.getStringExtra("USER_ID")
-        storageReference = FirebaseStorage.getInstance().reference
+        username = intent.getStringExtra("USERNAME")
+        storageReference = Firebase.storage.reference
 
         setupSpinnerIngredients()
         setupSpinnerUnit()
@@ -98,7 +93,7 @@ class CreaRicetteActivity : AppCompatActivity() {
             photoRef.putFile(selectedImageUri!!)
                 .addOnSuccessListener {
                     photoRef.downloadUrl.addOnSuccessListener { uri ->
-                        val ricetta = Ricette(nome, ingredients, quantities, units, procedimento, uri.toString())
+                        val ricetta = Ricette(nome, ingredients, quantities, units, procedimento, uri.toString(), username ?: "")
                         saveRicettaToDatabase(ricetta)
                     }
                 }
@@ -106,26 +101,24 @@ class CreaRicetteActivity : AppCompatActivity() {
                     Toast.makeText(this, "Errore nel caricamento della foto", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            val ricetta = Ricette(nome, ingredients, quantities, units, procedimento)
+            val ricetta = Ricette(nome, ingredients, quantities, units, procedimento, username = username ?: "")
             saveRicettaToDatabase(ricetta)
         }
     }
 
     private fun saveRicettaToDatabase(ricetta: Ricette) {
         val database = FirebaseDatabase.getInstance().reference
-        if (userId != null) {
-            val ricettaId = database.child("ricette").child(userId!!).push().key
-            if (ricettaId != null) {
-                database.child("ricette").child(userId!!).child(ricettaId).setValue(ricetta)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Ricetta salvata con successo", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Errore nel salvataggio della ricetta", Toast.LENGTH_SHORT).show()
-                    }
-            }
+        val ricettaId = database.child("ricette").push().key
+        if (ricettaId != null) {
+            database.child("ricette").child(ricettaId).setValue(ricetta)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Ricetta salvata con successo", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Errore nel salvataggio della ricetta", Toast.LENGTH_SHORT).show()
+                }
         } else {
-            Toast.makeText(this, "Utente non autenticato", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Errore nel generare l'ID della ricetta", Toast.LENGTH_SHORT).show()
         }
     }
 

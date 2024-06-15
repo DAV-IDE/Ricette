@@ -6,5 +6,6 @@ data class Ricette(
     val quantita: List<String> = emptyList(),
     val unita: List<String> = emptyList(),
     val procedimento: String = "",
-    val fotoUrl: String = ""
+    val fotoUrl: String = "",
+    val username: String = ""
 )
