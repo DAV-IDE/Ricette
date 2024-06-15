@@ -19,7 +19,7 @@ import com.google.firebase.database.*
 class SceltaRicettaActivity : AppCompatActivity() {
 
     private var username: String? = null
-    private val TAG = "SceltaRicettaActivity"
+    private val tAG = "SceltaRicettaActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class SceltaRicettaActivity : AppCompatActivity() {
         username = intent.getStringExtra("USERNAME")
 
         val selectedIngredients = intent.getStringArrayListExtra("SELECTED_INGREDIENTS") ?: return
-        Log.d(TAG, "Selected ingredients: $selectedIngredients")
+        Log.d(tAG, "Selected ingredients: $selectedIngredients")
         fetchRecipes(selectedIngredients)
     }
 
@@ -44,25 +44,25 @@ class SceltaRicettaActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val container = findViewById<LinearLayout>(R.id.linear_layout_container)
                 container.removeAllViews()  // Clear existing views if needed
-                Log.d(TAG, "DataSnapshot children count: ${dataSnapshot.childrenCount}")
+                Log.d(tAG, "DataSnapshot children count: ${dataSnapshot.childrenCount}")
                 for (snapshot in dataSnapshot.children) {
                     val ricetta = snapshot.getValue(Ricette::class.java)
                     if (ricetta != null) {
-                        Log.d(TAG, "Ricetta: $ricetta")
+                        Log.d(tAG, "Ricetta: $ricetta")
                         if (ingredients.all { ricetta.ingredienti.contains(it) }) {
-                            Log.d(TAG, "Matching recipe found: ${ricetta.nome}")
+                            Log.d(tAG, "Matching recipe found: ${ricetta.nome}")
                             val cardView = createCardView(ricetta)
                             container.addView(cardView)
-                            Log.d(TAG, "CardView added for recipe: ${ricetta.nome}")
+                            Log.d(tAG, "CardView added for recipe: ${ricetta.nome}")
                         }
                     } else {
-                        Log.d(TAG, "Ricetta is null")
+                        Log.d(tAG, "Ricetta is null")
                     }
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(TAG, "Database error: ${databaseError.message}")
+                Log.e(tAG, "Database error: ${databaseError.message}")
             }
         })
     }
