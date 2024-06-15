@@ -29,11 +29,16 @@ import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class CreaRicetteActivity : AppCompatActivity() {
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     private lateinit var layout: ConstraintLayout
     private var lastComponentId: Int = R.id.labelQuantity
+    private var userId: String? = null
+    private var selectedImageUri: Uri? = null
+    private lateinit var storageReference: StorageReference
 
     companion object {
         private const val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 101
@@ -44,6 +49,8 @@ class CreaRicetteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_crea_ricette)
 
         layout = findViewById(R.id.main)
+        userId = intent.getStringExtra("USER_ID")
+        storageReference = FirebaseStorage.getInstance().reference
 
         setupSpinnerIngredients()
         setupSpinnerUnit()
@@ -77,27 +84,48 @@ class CreaRicetteActivity : AppCompatActivity() {
         for (i in 0 until layout.childCount) {
             val view = layout.getChildAt(i)
             if (view is Spinner && view.adapter != null && view.adapter.count > 0) {
-                when (view.id) {
-                    R.id.spinnerIngredients -> ingredients.add(view.selectedItem.toString())
-                    R.id.spinnerUnitMisura -> units.add(view.selectedItem.toString())
+                when (view.tag) {
+                    "ingredient" -> ingredients.add(view.selectedItem.toString())
+                    "unit" -> units.add(view.selectedItem.toString())
                 }
             } else if (view is EditText && view.inputType == (InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL)) {
                 quantities.add(view.text.toString())
             }
         }
 
-        val ricetta = Ricette(nome, ingredients, quantities, units, procedimento)
-
-        val database = FirebaseDatabase.getInstance().reference
-        val ricettaId = database.child("ricette").push().key
-        if (ricettaId != null) {
-            database.child("ricette").child(ricettaId).setValue(ricetta)
+        if (selectedImageUri != null) {
+            val photoRef = storageReference.child("images/${selectedImageUri?.lastPathSegment}")
+            photoRef.putFile(selectedImageUri!!)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Ricetta salvata con successo", Toast.LENGTH_SHORT).show()
+                    photoRef.downloadUrl.addOnSuccessListener { uri ->
+                        val ricetta = Ricette(nome, ingredients, quantities, units, procedimento, uri.toString())
+                        saveRicettaToDatabase(ricetta)
+                    }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "Errore nel salvataggio della ricetta", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Errore nel caricamento della foto", Toast.LENGTH_SHORT).show()
                 }
+        } else {
+            val ricetta = Ricette(nome, ingredients, quantities, units, procedimento)
+            saveRicettaToDatabase(ricetta)
+        }
+    }
+
+    private fun saveRicettaToDatabase(ricetta: Ricette) {
+        val database = FirebaseDatabase.getInstance().reference
+        if (userId != null) {
+            val ricettaId = database.child("ricette").child(userId!!).push().key
+            if (ricettaId != null) {
+                database.child("ricette").child(userId!!).child(ricettaId).setValue(ricetta)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Ricetta salvata con successo", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Errore nel salvataggio della ricetta", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        } else {
+            Toast.makeText(this, "Utente non autenticato", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -105,6 +133,7 @@ class CreaRicetteActivity : AppCompatActivity() {
         imagePickerLauncher =
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                 uri?.let {
+                    selectedImageUri = it
                     val bitmap = decodeUriToBitmap(this, it)
                     findViewById<ImageView>(R.id.uploadedImage).setImageBitmap(bitmap)
                 }
@@ -148,6 +177,7 @@ class CreaRicetteActivity : AppCompatActivity() {
 
     private fun setupSpinnerIngredients() {
         val spinner: Spinner = findViewById(R.id.spinnerIngredients)
+        spinner.tag = "ingredient"
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -187,6 +217,7 @@ class CreaRicetteActivity : AppCompatActivity() {
 
     private fun setupSpinnerUnit() {
         val spinner: Spinner = findViewById(R.id.spinnerUnitMisura)
+        spinner.tag = "unit"
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -203,12 +234,14 @@ class CreaRicetteActivity : AppCompatActivity() {
 
     private fun addNewComponents() {
         val newSpinnerIngredients = createSpinner(R.array.ingredients_array, 200)
+        newSpinnerIngredients.tag = "ingredient"
         layout.addView(newSpinnerIngredients)
 
         val newEditTextQuantity = createEditText(100)
         layout.addView(newEditTextQuantity)
 
         val newSpinnerUnits = createSpinner(R.array.units_array, 60)
+        newSpinnerUnits.tag = "unit"
         layout.addView(newSpinnerUnits)
 
         applyConstraints(newSpinnerIngredients, newEditTextQuantity, newSpinnerUnits)
@@ -343,6 +376,3 @@ class CreaRicetteActivity : AppCompatActivity() {
         lastComponentId = spinnerUnits.id
     }
 }
-
-
-

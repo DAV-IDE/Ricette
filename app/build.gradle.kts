@@ -44,6 +44,7 @@ dependencies {
 
 
 
+    implementation (platform("com.google.firebase:firebase-storage"))
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -56,6 +57,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.database)
     implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

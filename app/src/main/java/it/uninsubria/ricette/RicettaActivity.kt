@@ -13,11 +13,11 @@ class RicettaActivity : AppCompatActivity() {
         binding = ActivityRicettaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val ricetta = intent.getParcelableExtra<Ricette>("RICETTA")
-        if (ricetta != null) {
-            binding.textViewTitolo4.text = ricetta.nome
-            binding.textViewPDB.text = ricetta.procedimento
-            // Popola la UI con gli altri dettagli della ricetta
-        }
+//        val ricetta = intent.getParcelableExtra<Ricette>("RICETTA")
+//        if (ricetta != null) {
+//            binding.textViewTitolo4.text = ricetta.nome
+//            binding.textViewPDB.text = ricetta.procedimento
+//            // Popola la UI con gli altri dettagli della ricetta
+//        }
     }
 }
