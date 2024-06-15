@@ -133,9 +133,10 @@ class CercaRicetteActivity : AppCompatActivity() {
 
     fun scelta(view: View) {
         val userId = intent.getStringExtra("USER_ID")
-        val intent = Intent(this@CercaRicetteActivity, SceltaRicettaActivity::class.java)
-        intent.putExtra("USER_ID", userId)
-        intent.putStringArrayListExtra("SELECTED_INGREDIENTS", ArrayList(selectedIngredients))
+        val intent = Intent(this@CercaRicetteActivity, SceltaRicettaActivity::class.java).apply {
+            putExtra("USER_ID", userId)
+            putStringArrayListExtra("SELECTED_INGREDIENTS", ArrayList(selectedIngredients))
+        }
         startActivity(intent)
     }
 }
