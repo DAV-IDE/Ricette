@@ -32,52 +32,60 @@ class AccediActivity : AppCompatActivity() {
     }
 
     fun accedi(view: View) {
-        val username = binding.editTextUserEmaiPhonel1.text.toString()
+        val input = binding.editTextUserEmaiPhonel1.text.toString()
         val password = binding.editTextPassword1.text.toString()
 
-        var isValid = true
-
-        if (username.isEmpty()) {
-            binding.editTextUserEmaiPhonel1.error = "Scrivi il tuo username"
-            isValid = false
+        if (input.isEmpty()) {
+            binding.editTextUserEmaiPhonel1.error = "Inserisci username, email o numero di telefono"
+            return
         }
         if (password.isEmpty()) {
-            binding.editTextPassword1.error = "Scrivi la tua password"
-            isValid = false
-        }
-        if (!isValid) {
-            Snackbar.make(binding.main, "Compila tutti i campi", Snackbar.LENGTH_SHORT).show()
+            binding.editTextPassword1.error = "Inserisci la password"
             return
         }
 
-        val query: Query = firebaseRef.orderByChild("username").equalTo(username)
+        // Cerca utente per username, email o numero di telefono
+        val query: Query = firebaseRef.orderByChild("numeroTelOrEmail").equalTo(input)
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Log.d("AccediActivity", "Username found")
-                    for (userSnapshot in snapshot.children) {
-                        val utente = userSnapshot.getValue(UtentiRegistrati::class.java)
-                        if (utente != null) {
-                            Log.d("AccediActivity", "Utente: ${utente.username}, Password: ${utente.password}")
-                            if (utente.password == password) {
-                                Toast.makeText(applicationContext, "Accesso riuscito", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this@AccediActivity, SceltaActivity::class.java)
-                                intent.putExtra("USER_ID", utente.id)
-                                startActivity(intent)
-                                finish()
-                                return
+                    verifyUserAndPassword(snapshot, password)
+                } else {
+                    // Cerca per username se il primo campo non corrisponde a numeroTelOrEmail
+                    firebaseRef.orderByChild("username").equalTo(input).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(usernameSnapshot: DataSnapshot) {
+                            if (usernameSnapshot.exists()) {
+                                verifyUserAndPassword(usernameSnapshot, password)
+                            } else {
+                                Snackbar.make(binding.main, "Nessun utente trovato con questi dati", Snackbar.LENGTH_LONG).show()
                             }
                         }
-                    }
-                    Snackbar.make(binding.main, "Password errata", Snackbar.LENGTH_SHORT).show()
-                } else {
-                    Snackbar.make(binding.main, "Utente non registrato", Snackbar.LENGTH_SHORT).show()
+
+                        override fun onCancelled(dbError: DatabaseError) {
+                            Toast.makeText(applicationContext, "Errore database: ${dbError.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Errore: ${error.message}", Toast.LENGTH_SHORT).show()
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(applicationContext, "Errore database: ${databaseError.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun verifyUserAndPassword(snapshot: DataSnapshot, password: String) {
+        for (userSnapshot in snapshot.children) {
+            val user = userSnapshot.getValue(UtentiRegistrati::class.java)
+            if (user != null && user.password == password) {
+                Toast.makeText(applicationContext, "Accesso riuscito", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@AccediActivity, SceltaActivity::class.java)
+                intent.putExtra("USER_ID", user.id)
+                startActivity(intent)
+                finish()
+                return
+            }
+        }
+        Snackbar.make(binding.main, "Password errata", Snackbar.LENGTH_LONG).show()
     }
 }
