@@ -11,7 +11,7 @@ android {
     buildFeatures{
         viewBinding = true
     }
-    
+
     defaultConfig {
         applicationId = "it.uninsubria.ricette"
         minSdk = 21
@@ -42,7 +42,7 @@ android {
 
 dependencies {
 
-
+    implementation("com.squareup.picasso:picasso:2.71828")
 
     implementation (platform("com.google.firebase:firebase-storage"))
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))

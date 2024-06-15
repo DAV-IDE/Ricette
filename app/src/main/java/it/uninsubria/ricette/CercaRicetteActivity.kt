@@ -22,6 +22,7 @@ class CercaRicetteActivity : AppCompatActivity() {
     private lateinit var ingredients: ArrayList<String>
     private val maxSelectableIngredients = 5
     private val selectedIngredients = mutableSetOf<String>()
+    private var username: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,8 @@ class CercaRicetteActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        username = intent.getStringExtra("USERNAME")
 
         ingredients = arrayListOf(
             "acqua","aglio", "agnello", "albicocca", "alloro", "aloe", "ananas",
@@ -62,7 +65,7 @@ class CercaRicetteActivity : AppCompatActivity() {
         )
 
         val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, android.R.id.text1, ingredients) {
-            override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
+            override fun getView(position: Int, convertView: View?, parent: android.view.ViewGroup): View {
                 val view = super.getView(position, convertView, parent)
                 val textView = view.findViewById<android.widget.TextView>(android.R.id.text1)
                 textView.setTextColor(Color.WHITE)
@@ -132,15 +135,13 @@ class CercaRicetteActivity : AppCompatActivity() {
     }
 
     fun scelta(view: View) {
-        val userId = intent.getStringExtra("USER_ID")
         val intent = Intent(this@CercaRicetteActivity, SceltaRicettaActivity::class.java).apply {
-            putExtra("USER_ID", userId)
+            putExtra("USERNAME", username)
             putStringArrayListExtra("SELECTED_INGREDIENTS", ArrayList(selectedIngredients))
         }
         startActivity(intent)
     }
 }
-
 
 
 
