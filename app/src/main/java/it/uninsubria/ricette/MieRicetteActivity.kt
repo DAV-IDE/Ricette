@@ -85,7 +85,7 @@ class MieRicetteActivity : AppCompatActivity() {
                 }
             }
             setOnClickListener {
-                val intent = Intent(this@MieRicetteActivity, RicettaActivity::class.java).apply {
+                val intent = Intent(this@MieRicetteActivity, RicettaActivity2::class.java).apply {
                     putExtra("RICETTA", ricetta)
                     putExtra("USERNAME", username)
                 }
