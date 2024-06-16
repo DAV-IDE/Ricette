@@ -73,6 +73,16 @@ class SceltaRicettaActivity : AppCompatActivity() {
 
     private fun createCardView(ricetta: Ricette): View {
         val cardView = LayoutInflater.from(this).inflate(R.layout.recipe_card_view_template, null, false) as CardView
+
+        val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        val margin = resources.getDimensionPixelSize(R.dimen.default_margin)
+        layoutParams.setMargins(margin, margin, margin, margin)
+        cardView.layoutParams = layoutParams
+
         cardView.apply {
             findViewById<TextView>(R.id.textViewNomeRicetta).text = ricetta.nome
             findViewById<TextView>(R.id.textViewNomeUtente).text = ricetta.username
