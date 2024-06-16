@@ -101,7 +101,8 @@ class CreaRicetteActivity : AppCompatActivity() {
                     Toast.makeText(this, "Errore nel caricamento della foto", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            val ricetta = Ricette(nome, ingredients, quantities, units, procedimento, username = username ?: "")
+            val ricetta = Ricette(nome, ingredients, quantities, units, procedimento )
+            //username = username ?: ""
             saveRicettaToDatabase(ricetta)
         }
     }

@@ -4,13 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Ricette(
-    val nome: String = "",
-    val ingredienti: List<String> = emptyList(),
-    val quantita: List<String> = emptyList(),
-    val unita: List<String> = emptyList(),
-    val procedimento: String = "",
-    val fotoUrl: String = "",
-    val username: String = ""
+    var nome: String = "",
+    var ingredienti: List<String> = emptyList(),
+    var quantita: List<String> = emptyList(),
+    var unita: List<String> = emptyList(),
+    var procedimento: String = "",
+    var fotoUrl: String = "",
+    var username: String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",

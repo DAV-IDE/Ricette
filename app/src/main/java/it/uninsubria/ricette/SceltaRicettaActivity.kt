@@ -45,18 +45,27 @@ class SceltaRicettaActivity : AppCompatActivity() {
                 val container = findViewById<LinearLayout>(R.id.linear_layout_container)
                 container.removeAllViews()  // Clear existing views if needed
                 Log.d(tAG, "DataSnapshot children count: ${dataSnapshot.childrenCount}")
-                for (snapshot in dataSnapshot.children) {
-                    val ricetta = snapshot.getValue(Ricette::class.java)
-                    if (ricetta != null) {
-                        Log.d(tAG, "Ricetta: $ricetta")
-                        if (ingredients.all { ricetta.ingredienti.contains(it) }) {
-                            Log.d(tAG, "Matching recipe found: ${ricetta.nome}")
-                            val cardView = createCardView(ricetta)
-                            container.addView(cardView)
-                            Log.d(tAG, "CardView added for recipe: ${ricetta.nome}")
+
+                for (userSnapshot in dataSnapshot.children) {
+                    for (recipeSnapshot in userSnapshot.children) {
+                        val nome = recipeSnapshot.child("nome").getValue(String::class.java)
+                        val ingredienti = recipeSnapshot.child("ingredienti").getValue(object : GenericTypeIndicator<List<String>>() {})
+                        val quantita = recipeSnapshot.child("quantita").getValue(object : GenericTypeIndicator<List<String>>() {})
+                        val unita = recipeSnapshot.child("unita").getValue(object : GenericTypeIndicator<List<String>>() {})
+                        val procedimento = recipeSnapshot.child("procedimento").getValue(String::class.java)
+
+                        if (nome != null && ingredienti != null && quantita != null && unita != null && procedimento != null) {
+                            val ricetta = Ricette(nome, ingredienti, quantita, unita, procedimento)
+                            Log.d(tAG, "Ricetta: $ricetta")
+                            if (ingredients.all { ricetta.ingredienti.contains(it) }) {
+                                Log.d(tAG, "Matching recipe found: ${ricetta.nome}")
+                                val cardView = createCardView(ricetta)
+                                container.addView(cardView)
+                                Log.d(tAG, "CardView added for recipe: ${ricetta.nome}")
+                            }
+                        } else {
+                            Log.d(tAG, "Ricetta is null")
                         }
-                    } else {
-                        Log.d(tAG, "Ricetta is null")
                     }
                 }
             }
@@ -66,6 +75,8 @@ class SceltaRicettaActivity : AppCompatActivity() {
             }
         })
     }
+
+
 
     private fun createCardView(ricetta: Ricette): View {
         val cardView = LayoutInflater.from(this).inflate(R.layout.recipe_card_view_template, null, false) as CardView
