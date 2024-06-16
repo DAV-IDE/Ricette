@@ -52,7 +52,7 @@ class CercaRicetteActivity : AppCompatActivity() {
             "Girasole", "Granchio", "Insalata", "Kiwi", "Lampone",
             "Latte", "Lattuga", "Limone", "Litchi", "Maiale", "Mais",
             "Mandarino", "Mango", "Melanzana", "Melone", "Menta", "Merluzzo",
-            "Miele", "Mirtilli", "Nocciola", "Noce", "Noce Moscata", "Oliva",
+            "Miele", "Mirtilli", "Nocciola", "Noce", "Noce Moscata","Olio", "Oliva",
             "Origano", "Orzo", "Pane", "Panna", "Papaya", "Paprika", "Pasta",
             "Patata", "Pepe", "Pepe Bianco", "Pepe Di Cayenna", "Pepe Nero",
             "Pepe Rosa", "Peperoncino", "Peperoncino In Polvere", "Peperoni",
