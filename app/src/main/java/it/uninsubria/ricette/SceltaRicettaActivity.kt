@@ -8,13 +8,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.squareup.picasso.Picasso
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 class SceltaRicettaActivity : AppCompatActivity() {
 
@@ -23,7 +22,6 @@ class SceltaRicettaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_scelta_ricetta)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -46,26 +44,23 @@ class SceltaRicettaActivity : AppCompatActivity() {
                 container.removeAllViews()  // Clear existing views if needed
                 Log.d(tAG, "DataSnapshot children count: ${dataSnapshot.childrenCount}")
 
-                for (userSnapshot in dataSnapshot.children) {
-                    for (recipeSnapshot in userSnapshot.children) {
-                        val nome = recipeSnapshot.child("nome").getValue(String::class.java)
-                        val ingredienti = recipeSnapshot.child("ingredienti").getValue(object : GenericTypeIndicator<List<String>>() {})
-                        val quantita = recipeSnapshot.child("quantita").getValue(object : GenericTypeIndicator<List<String>>() {})
-                        val unita = recipeSnapshot.child("unita").getValue(object : GenericTypeIndicator<List<String>>() {})
-                        val procedimento = recipeSnapshot.child("procedimento").getValue(String::class.java)
+                for (recipeSnapshot in dataSnapshot.children) {
+                    val nome = recipeSnapshot.child("nome").getValue(String::class.java) ?: ""
+                    val ingredienti = recipeSnapshot.child("ingredienti").getValue(object : GenericTypeIndicator<List<String>>() {}) ?: emptyList()
+                    val quantita = recipeSnapshot.child("quantita").getValue(object : GenericTypeIndicator<List<String>>() {}) ?: emptyList()
+                    val unita = recipeSnapshot.child("unita").getValue(object : GenericTypeIndicator<List<String>>() {}) ?: emptyList()
+                    val procedimento = recipeSnapshot.child("procedimento").getValue(String::class.java) ?: ""
+                    val fotoUrl = recipeSnapshot.child("fotoUrl").getValue(String::class.java) ?: ""
+                    val username = recipeSnapshot.child("username").getValue(String::class.java) ?: ""
 
-                        if (nome != null && ingredienti != null && quantita != null && unita != null && procedimento != null) {
-                            val ricetta = Ricette(nome, ingredienti, quantita, unita, procedimento)
-                            Log.d(tAG, "Ricetta: $ricetta")
-                            if (ingredients.all { ricetta.ingredienti.contains(it) }) {
-                                Log.d(tAG, "Matching recipe found: ${ricetta.nome}")
-                                val cardView = createCardView(ricetta)
-                                container.addView(cardView)
-                                Log.d(tAG, "CardView added for recipe: ${ricetta.nome}")
-                            }
-                        } else {
-                            Log.d(tAG, "Ricetta is null")
-                        }
+                    val ricetta = Ricette(nome, ingredienti, quantita, unita, procedimento, fotoUrl, username)
+                    Log.d(tAG, "Ricetta: $ricetta")
+
+                    if (ingredients.all { ricetta.ingredienti.contains(it) }) {
+                        Log.d(tAG, "Matching recipe found: ${ricetta.nome}")
+                        val cardView = createCardView(ricetta)
+                        container.addView(cardView)
+                        Log.d(tAG, "CardView added for recipe: ${ricetta.nome}")
                     }
                 }
             }
@@ -75,8 +70,6 @@ class SceltaRicettaActivity : AppCompatActivity() {
             }
         })
     }
-
-
 
     private fun createCardView(ricetta: Ricette): View {
         val cardView = LayoutInflater.from(this).inflate(R.layout.recipe_card_view_template, null, false) as CardView
@@ -102,3 +95,4 @@ class SceltaRicettaActivity : AppCompatActivity() {
         return cardView
     }
 }
+
