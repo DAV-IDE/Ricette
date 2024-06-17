@@ -36,14 +36,14 @@
 
         <TextView
             android:id="@+id/textViewTitolo8"
-            android:layout_width="327dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="Nome ricetta"
             android:textColor="@color/gradient_white"
             android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.065" />
@@ -51,7 +51,7 @@
 
         <ImageView
             android:id="@+id/imageViewFromDB2"
-            android:layout_width="0dp"
+            android:layout_width="395dp"
             android:layout_height="250dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/list_item_border"
