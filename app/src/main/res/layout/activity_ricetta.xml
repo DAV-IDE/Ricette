@@ -18,8 +18,8 @@
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:src="@drawable/sfondo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/buttonPreferito2"
@@ -64,13 +64,13 @@
             android:id="@+id/imageViewFromDB"
             android:layout_width="395dp"
             android:layout_height="250dp"
+            android:adjustViewBounds="true"
             android:background="@drawable/list_item_border"
             android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewSottoTitolo4"
-            app:layout_constraintVertical_bias="0.05"/>
+            app:layout_constraintVertical_bias="0.05" />
 
         <TextView
             android:id="@+id/textViewShowIngredients"
@@ -78,14 +78,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:fontFamily="serif"
-            android:text="@string/scegli"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20sp"
             android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="3"
+            android:text="@string/scegli"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/textViewShowQuantity"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageViewFromDB" />
@@ -96,14 +96,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:fontFamily="serif"
-            android:text="@string/quantity"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20sp"
             android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="3"
+            android:text="@string/quantity"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textViewShowIngredients"
             app:layout_constraintTop_toBottomOf="@id/imageViewFromDB" />
@@ -113,9 +113,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/textViewShowIngredients"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/textViewShowIngredients" />
 
         <TextView
             android:id="@+id/textViewShowProcedimento"
@@ -123,34 +123,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="serif"
-            android:text="@string/show_procedimento"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20sp"
+            android:paddingTop="20dp"
             android:shadowColor="@color/black"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="3"
+            android:text="@string/show_procedimento"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ingredients_container"
-            android:paddingTop="20dp"/>
+            app:layout_constraintTop_toBottomOf="@id/ingredients_container" />
 
         <TextView
             android:id="@+id/textViewPDB"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            android:minHeight="200dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/ingredient_border"
-            android:textColor="@color/black"
             android:gravity="top|start"
-            android:padding="16dp"
-            android:textSize="20sp"
             android:lineSpacingExtra="8dp"
+            android:minHeight="200dp"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewShowProcedimento"/>
+            app:layout_constraintTop_toBottomOf="@id/textViewShowProcedimento" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
