@@ -46,13 +46,12 @@
 
         <ImageButton
             android:id="@+id/buttonPreferito"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="1dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/selettore_preferiti"
-            android:src="@drawable/star" />
+            android:layout_marginTop="65dp"
+            android:background="@drawable/selettore_preferiti" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
