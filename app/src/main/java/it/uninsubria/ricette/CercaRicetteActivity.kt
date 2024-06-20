@@ -113,6 +113,16 @@ class CercaRicetteActivity : AppCompatActivity() {
         changeSearchViewIconColor(binding.searchView, Color.WHITE)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Reset delle selezioni
+        selectedIngredients.clear()
+        for (i in 0 until binding.multipleListView.count) {
+            binding.multipleListView.setItemChecked(i, false)
+        }
+        adapter.notifyDataSetChanged()
+    }
+
     private fun filterIngredients(query: String) {
         filteredIngredients.clear()
         if (query.isEmpty()) {
