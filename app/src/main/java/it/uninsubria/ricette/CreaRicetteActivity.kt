@@ -2,12 +2,13 @@ package it.uninsubria.ricette
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.InputType
 import android.view.View
 import android.widget.*
@@ -18,11 +19,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.storage
@@ -72,6 +71,11 @@ class CreaRicetteActivity : AppCompatActivity() {
         val nome = findViewById<EditText>(R.id.editTextNomeRicetta).text.toString()
         val procedimento = findViewById<EditText>(R.id.editTextProcedimento).text.toString()
 
+        if (nome.isBlank() || procedimento.isBlank()) {
+            Toast.makeText(this, "Compila tutti i campi", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val ingredients = mutableListOf<String>()
         val quantities = mutableListOf<String>()
         val units = mutableListOf<String>()
@@ -88,6 +92,11 @@ class CreaRicetteActivity : AppCompatActivity() {
             }
         }
 
+        if (ingredients.isEmpty() || quantities.isEmpty() || units.isEmpty() || ingredients.any { it.isBlank() } || quantities.any { it.isBlank() } || units.any { it.isBlank() }) {
+            Toast.makeText(this, "Compila tutti i campi", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         if (selectedImageUri != null) {
             val photoRef = storageReference.child("images/${selectedImageUri?.lastPathSegment}")
             photoRef.putFile(selectedImageUri!!)
@@ -101,7 +110,7 @@ class CreaRicetteActivity : AppCompatActivity() {
                     Toast.makeText(this, "Errore nel caricamento della foto", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            val ricetta = Ricette(nome, ingredients, quantities, units, procedimento, username = username ?: "" )
+            val ricetta = Ricette(nome, ingredients, quantities, units, procedimento, username = username ?: "")
             saveRicettaToDatabase(ricetta)
         }
     }
@@ -112,7 +121,7 @@ class CreaRicetteActivity : AppCompatActivity() {
         if (ricettaId != null) {
             database.child("ricette").child(ricettaId).setValue(ricetta)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Ricetta salvata con successo", Toast.LENGTH_SHORT).show()
+                    showSnackbarAndReturn()
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "Errore nel salvataggio della ricetta", Toast.LENGTH_SHORT).show()
@@ -120,6 +129,16 @@ class CreaRicetteActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Errore nel generare l'ID della ricetta", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showSnackbarAndReturn() {
+        val snackbar = Snackbar.make(layout, "Ricetta salvata con successo", Snackbar.LENGTH_LONG)
+        snackbar.show()
+
+        // Delay for a few seconds and then finish the activity
+        Handler(Looper.getMainLooper()).postDelayed({
+            finish()
+        }, 3000) // 3000 milliseconds delay
     }
 
     private fun setupImagePicker() {
