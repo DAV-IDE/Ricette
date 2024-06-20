@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -163,10 +164,14 @@ class CercaRicetteActivity : AppCompatActivity() {
     }
 
     fun scelta(view: View) {
-        val intent = Intent(this@CercaRicetteActivity, SceltaRicettaActivity::class.java).apply {
-            putExtra("USERNAME", username)
-            putStringArrayListExtra("SELECTED_INGREDIENTS", ArrayList(selectedIngredients))
+        if (selectedIngredients.isEmpty()) {
+            Toast.makeText(this, "Seleziona almeno un ingrediente", Toast.LENGTH_SHORT).show()
+        } else {
+            val intent = Intent(this@CercaRicetteActivity, SceltaRicettaActivity::class.java).apply {
+                putExtra("USERNAME", username)
+                putStringArrayListExtra("SELECTED_INGREDIENTS", ArrayList(selectedIngredients))
+            }
+            startActivity(intent)
         }
-        startActivity(intent)
     }
 }
