@@ -1,15 +1,20 @@
-package it.uninsubria.ricette;
+package it.uninsubria.ricette
 
-import android.os.Bundle;
-import androidx.activity.enableEdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import it.uninsubria.ricette.databinding.ActivityRicetta2Binding;
-import com.squareup.picasso.Picasso;
+import android.app.AlertDialog
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
+import it.uninsubria.ricette.databinding.ActivityRicetta2Binding
 
 class RicettaActivity2 : AppCompatActivity() {
 
@@ -23,10 +28,10 @@ class RicettaActivity2 : AppCompatActivity() {
 
         val ricetta = intent.getParcelableExtra<Ricette>("RICETTA")
         val username = intent.getStringExtra("USERNAME")
+        val recipeId = intent.getStringExtra("RECIPE_ID")
 
         if (ricetta != null) {
             binding.textViewTitolo8.text = ricetta.nome
-
 
             if (ricetta.fotoUrl.isNotEmpty()) {
                 Picasso.get()
@@ -62,5 +67,41 @@ class RicettaActivity2 : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        binding.buttonElimina2.setOnClickListener {
+            showDeleteConfirmationDialog(recipeId)
+        }
+    }
+
+    private fun showDeleteConfirmationDialog(recipeId: String?) {
+        if (recipeId == null) return
+
+        AlertDialog.Builder(this).apply {
+            setTitle("Conferma Eliminazione")
+            setMessage("Sei sicuro di volere eliminare definitivamente la ricetta?")
+            setPositiveButton("Sì") { _, _ ->
+                deleteRecipeFromFirebase(recipeId)
+            }
+            setNegativeButton("No", null)
+            create()
+            show()
+        }
+    }
+
+    private fun deleteRecipeFromFirebase(recipeId: String) {
+        val databaseReference = FirebaseDatabase.getInstance().getReference("ricette").child(recipeId)
+
+        databaseReference.removeValue().addOnSuccessListener {
+            Toast.makeText(this, "Ricetta eliminata", Toast.LENGTH_SHORT).show()
+            finishActivityWithDelay()
+        }.addOnFailureListener {
+            Toast.makeText(this, "Errore durante l'eliminazione", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun finishActivityWithDelay() {
+        android.os.Handler(mainLooper).postDelayed({
+            finish()
+        }, 3000) // 3000 milliseconds delay
     }
 }

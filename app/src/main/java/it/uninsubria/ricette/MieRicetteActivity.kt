@@ -94,6 +94,7 @@ class MieRicetteActivity : AppCompatActivity() {
                 val intent = Intent(this@MieRicetteActivity, RicettaActivity2::class.java).apply {
                     putExtra("RICETTA", ricetta)
                     putExtra("USERNAME", username)
+                    putExtra("RECIPE_ID", recipeId)
                 }
                 startActivity(intent)
             }
