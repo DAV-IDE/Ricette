@@ -20,9 +20,11 @@ class CercaRicetteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCercaRicetteBinding
     private lateinit var ingredients: ArrayList<String>
+    private lateinit var filteredIngredients: ArrayList<String>
     private val maxSelectableIngredients = 5
     private val selectedIngredients = mutableSetOf<String>()
     private var username: String? = null
+    private lateinit var adapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +66,18 @@ class CercaRicetteActivity : AppCompatActivity() {
             "Yogurt", "Zafferano", "Zenzero", "Zucca", "Zucchero", "Zucchine"
         )
 
-        val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, android.R.id.text1, ingredients) {
+        filteredIngredients = ArrayList(ingredients)
+
+        adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, android.R.id.text1, filteredIngredients) {
             override fun getView(position: Int, convertView: View?, parent: android.view.ViewGroup): View {
                 val view = super.getView(position, convertView, parent)
                 val textView = view.findViewById<android.widget.TextView>(android.R.id.text1)
                 textView.setTextColor(Color.WHITE)
+
+                // Setta il check solo se l'ingrediente è selezionato
+                val isChecked = selectedIngredients.contains(filteredIngredients[position])
+                binding.multipleListView.setItemChecked(position, isChecked)
+
                 return view
             }
         }
@@ -76,7 +85,7 @@ class CercaRicetteActivity : AppCompatActivity() {
         binding.multipleListView.adapter = adapter
         binding.multipleListView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         binding.multipleListView.setOnItemClickListener { parent, view, position, id ->
-            val ingredient = ingredients[position]
+            val ingredient = filteredIngredients[position]
             if (selectedIngredients.contains(ingredient)) {
                 selectedIngredients.remove(ingredient)
             } else {
@@ -95,14 +104,23 @@ class CercaRicetteActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                adapter.filter.filter(newText)
+                filterIngredients(newText)
                 return false
             }
         })
 
         changeSearchViewTextColor(binding.searchView, Color.WHITE, Color.WHITE)
-
         changeSearchViewIconColor(binding.searchView, Color.WHITE)
+    }
+
+    private fun filterIngredients(query: String) {
+        filteredIngredients.clear()
+        if (query.isEmpty()) {
+            filteredIngredients.addAll(ingredients)
+        } else {
+            filteredIngredients.addAll(ingredients.filter { it.contains(query, ignoreCase = true) })
+        }
+        adapter.notifyDataSetChanged()
     }
 
     private fun changeSearchViewTextColor(searchView: SearchView, textColor: Int, hintColor: Int) {
@@ -142,6 +160,3 @@ class CercaRicetteActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
-
-
-
