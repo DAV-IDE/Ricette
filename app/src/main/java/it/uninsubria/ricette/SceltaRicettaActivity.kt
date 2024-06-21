@@ -1,5 +1,6 @@
 package it.uninsubria.ricette
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,8 @@ class SceltaRicettaActivity : AppCompatActivity() {
 
     private var username: String? = null
     private val tAG = "SceltaRicettaActivity"
+    private val REQUEST_CODE = 1
+    private lateinit var selectedIngredients: ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +36,13 @@ class SceltaRicettaActivity : AppCompatActivity() {
 
         username = intent.getStringExtra("USERNAME")
 
-        val selectedIngredients = intent.getStringArrayListExtra("SELECTED_INGREDIENTS") ?: return
+        selectedIngredients = intent.getStringArrayListExtra("SELECTED_INGREDIENTS") ?: return
         Log.d(tAG, "Selected ingredients: $selectedIngredients")
+        fetchRecipes(selectedIngredients)
+    }
+
+    override fun onResume() {
+        super.onResume()
         fetchRecipes(selectedIngredients)
     }
 
@@ -92,6 +100,7 @@ class SceltaRicettaActivity : AppCompatActivity() {
         val margin = resources.getDimensionPixelSize(R.dimen.default_margin)
         layoutParams.setMargins(margin, margin, margin, margin)
         cardView.layoutParams = layoutParams
+        cardView.tag = ricetta.recipeId  // Imposta l'ID della ricetta come tag del cardView
 
         cardView.apply {
             findViewById<TextView>(R.id.textViewNomeRicetta).text = ricetta.nome
@@ -117,7 +126,7 @@ class SceltaRicettaActivity : AppCompatActivity() {
                 val intent = Intent(this@SceltaRicettaActivity, RicettaActivity::class.java)
                 intent.putExtra("RICETTA", ricetta)
                 intent.putExtra("USERNAME", username)
-                startActivity(intent)
+                startActivityForResult(intent, REQUEST_CODE)
             }
         }
         return cardView
@@ -170,6 +179,22 @@ class SceltaRicettaActivity : AppCompatActivity() {
                     Log.e(tAG, "Database error: ${databaseError.message}")
                 }
             })
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val recipeId = data?.getStringExtra("RECIPE_ID")
+            val isFavorite = data?.getBooleanExtra("IS_FAVORITE", false) ?: false
+            val container = findViewById<LinearLayout>(R.id.linear_layout_container)
+            for (i in 0 until container.childCount) {
+                val cardView = container.getChildAt(i) as CardView
+                val buttonPreferito = cardView.findViewById<ImageButton>(R.id.buttonPreferito)
+                if (cardView.tag == recipeId) {
+                    buttonPreferito.isSelected = isFavorite
+                }
+            }
         }
     }
 }
