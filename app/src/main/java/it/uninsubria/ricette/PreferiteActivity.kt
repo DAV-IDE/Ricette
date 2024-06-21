@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import it.uninsubria.ricette.databinding.ActivityPreferiteBinding
@@ -113,6 +115,13 @@ class PreferiteActivity : AppCompatActivity() {
                 imageView.setImageResource(R.drawable.image_placeholder)  // Immagine predefinita se non c'è fotoUrl
             }
 
+            // Imposta la stella del buttonPreferiti come gialla
+            val buttonPreferito = findViewById<ImageButton>(R.id.buttonPreferito)
+            buttonPreferito.isSelected = true
+            buttonPreferito.setOnClickListener {
+                toggleRecipeFavoriteStatus(ricetta, buttonPreferito, cardView)
+            }
+
             setOnClickListener {
                 val intent = Intent(this@PreferiteActivity, RicettaActivity::class.java)
                 intent.putExtra("RICETTA", ricetta)
@@ -121,5 +130,38 @@ class PreferiteActivity : AppCompatActivity() {
             }
         }
         return cardView
+    }
+
+    private fun toggleRecipeFavoriteStatus(ricetta: Ricette, button: ImageButton, cardView: CardView) {
+        username?.let {
+            val databaseReference = FirebaseDatabase.getInstance().getReference("preferiti").child(it).child(ricetta.recipeId)
+            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        // Se la ricetta è già nei preferiti, rimuovila
+                        databaseReference.removeValue().addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                button.isSelected = false
+                                Snackbar.make(findViewById(R.id.main), "Ricetta rimossa dai preferiti", Snackbar.LENGTH_SHORT).show()
+                                // Rimuovi la cardView dal container
+                                val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
+                                container.removeView(cardView)
+                                // Se non ci sono più ricette preferite, mostra il messaggio
+                                if (container.childCount == 0) {
+                                    val noFavoritesView = LayoutInflater.from(this@PreferiteActivity).inflate(R.layout.no_favorites_message, container, false)
+                                    container.addView(noFavoritesView)
+                                }
+                            } else {
+                                Snackbar.make(findViewById(R.id.main), "Errore nella rimozione della ricetta dai preferiti", Snackbar.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.e(tAG, "Database error: ${databaseError.message}")
+                }
+            })
+        }
     }
 }
