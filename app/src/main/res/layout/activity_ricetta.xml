@@ -24,7 +24,7 @@
         <ImageButton
             android:id="@+id/buttonPreferito2"
             android:layout_width="50dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@drawable/selettore_preferiti"
             android:src="@drawable/star2"
             app:layout_constraintEnd_toEndOf="parent"
