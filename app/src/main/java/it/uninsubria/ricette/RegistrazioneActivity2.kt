@@ -111,6 +111,7 @@ class RegistrazioneActivity2 : AppCompatActivity() {
         firebaseRef.child(utenteId).setValue(utenti)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    createFavorites(username)
                     Snackbar.make(binding.main, "Dati memorizzati con successo", Snackbar.LENGTH_SHORT).show()
 
                     val intent = Intent(this@RegistrazioneActivity2, SceltaActivity::class.java)
@@ -123,5 +124,14 @@ class RegistrazioneActivity2 : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Snackbar.make(binding.main, "Errore: ${exception.message}", Snackbar.LENGTH_SHORT).show()
             }
+    }
+
+    private fun createFavorites(username: String) {
+        val favoritesRef = FirebaseDatabase.getInstance().getReference("preferiti").child(username).child("favoritesId")
+        favoritesRef.setValue(true).addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Snackbar.make(binding.main, "Errore nella creazione della cartella Preferiti", Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
 }
