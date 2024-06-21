@@ -1,5 +1,6 @@
 package it.uninsubria.ricette
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,7 @@ class PreferiteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPreferiteBinding
     private var username: String? = null
     private val tAG = "PreferiteActivity"
+    private val REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,7 +128,7 @@ class PreferiteActivity : AppCompatActivity() {
                 val intent = Intent(this@PreferiteActivity, RicettaActivity::class.java)
                 intent.putExtra("RICETTA", ricetta)
                 intent.putExtra("USERNAME", username)
-                startActivity(intent)
+                startActivityForResult(intent, REQUEST_CODE)
             }
         }
         return cardView
@@ -162,6 +164,29 @@ class PreferiteActivity : AppCompatActivity() {
                     Log.e(tAG, "Database error: ${databaseError.message}")
                 }
             })
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val recipeId = data?.getStringExtra("RECIPE_ID")
+            val isFavorite = data?.getBooleanExtra("IS_FAVORITE", false) ?: false
+            val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
+            for (i in 0 until container.childCount) {
+                val cardView = container.getChildAt(i) as CardView
+                val buttonPreferito = cardView.findViewById<ImageButton>(R.id.buttonPreferito)
+                if (cardView.tag == recipeId) {
+                    buttonPreferito.isSelected = isFavorite
+                    if (!isFavorite) {
+                        container.removeView(cardView)
+                    }
+                }
+            }
+            if (container.childCount == 0) {
+                val noFavoritesView = LayoutInflater.from(this@PreferiteActivity).inflate(R.layout.no_favorites_message, container, false)
+                container.addView(noFavoritesView)
+            }
         }
     }
 }
