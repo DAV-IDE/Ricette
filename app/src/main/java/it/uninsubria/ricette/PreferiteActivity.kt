@@ -2,26 +2,124 @@ package it.uninsubria.ricette
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
+import it.uninsubria.ricette.databinding.ActivityPreferiteBinding
 
 class PreferiteActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityPreferiteBinding
+    private var username: String? = null
+    private val tAG = "PreferiteActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_preferite)
+        binding = ActivityPreferiteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val cardView = findViewById<CardView>(R.id.cardView3)
-        cardView.setOnClickListener {
-            val intent = Intent(this, RicettaActivity::class.java)
-            startActivity(intent)
+
+        username = intent.getStringExtra("USERNAME")
+        fetchFavoriteRecipes()
+    }
+
+    private fun fetchFavoriteRecipes() {
+        username?.let {
+            val databaseReference = FirebaseDatabase.getInstance().getReference("preferiti").child(it)
+            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
+                    container.removeAllViews()  // Clear existing views if needed
+                    Log.d(tAG, "DataSnapshot children count: ${dataSnapshot.childrenCount}")
+
+                    if (dataSnapshot.childrenCount.toInt() == 0) {
+                        val noFavoritesView = LayoutInflater.from(this@PreferiteActivity).inflate(R.layout.no_favorites_message, container, false)
+                        container.addView(noFavoritesView)
+                        return
+                    }
+
+                    for (favoriteSnapshot in dataSnapshot.children) {
+                        val recipeId = favoriteSnapshot.key ?: continue
+                        fetchRecipeDetails(recipeId, container)
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.e(tAG, "Database error: ${databaseError.message}")
+                }
+            })
         }
+    }
+
+    private fun fetchRecipeDetails(recipeId: String, container: LinearLayout) {
+        val recipeReference = FirebaseDatabase.getInstance().getReference("ricette").child(recipeId)
+        recipeReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val nome = dataSnapshot.child("nome").getValue(String::class.java) ?: ""
+                val ingredienti = dataSnapshot.child("ingredienti").getValue(object : GenericTypeIndicator<List<String>>() {}) ?: emptyList()
+                val quantita = dataSnapshot.child("quantita").getValue(object : GenericTypeIndicator<List<String>>() {}) ?: emptyList()
+                val unita = dataSnapshot.child("unita").getValue(object : GenericTypeIndicator<List<String>>() {}) ?: emptyList()
+                val procedimento = dataSnapshot.child("procedimento").getValue(String::class.java) ?: ""
+                val fotoUrl = dataSnapshot.child("fotoUrl").getValue(String::class.java) ?: ""
+                val recipeUsername = dataSnapshot.child("username").getValue(String::class.java) ?: ""
+
+                val ricetta = Ricette(nome, ingredienti, quantita, unita, procedimento, fotoUrl, recipeUsername, recipeId)
+                val cardView = createCardView(ricetta)
+                container.addView(cardView)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e(tAG, "Database error: ${databaseError.message}")
+            }
+        })
+    }
+
+    private fun createCardView(ricetta: Ricette): View {
+        val cardView = LayoutInflater.from(this).inflate(R.layout.recipe_card_view_template, null, false) as CardView
+
+        val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        val margin = resources.getDimensionPixelSize(R.dimen.default_margin)
+        layoutParams.setMargins(margin, margin, margin, margin)
+        cardView.layoutParams = layoutParams
+        cardView.tag = ricetta.recipeId  // Imposta l'ID della ricetta come tag del cardView
+
+        cardView.apply {
+            findViewById<TextView>(R.id.textViewNomeRicetta).text = ricetta.nome
+            findViewById<TextView>(R.id.textViewNomeUtente).text = ricetta.username
+            val imageView = findViewById<ImageView>(R.id.imageViewRicetta)
+            if (ricetta.fotoUrl.isNotEmpty()) {
+                Picasso.get()
+                    .load(ricetta.fotoUrl)
+                    .placeholder(R.drawable.image_placeholder) // Immagine predefinita mentre l'immagine viene caricata
+                    .into(imageView)
+            } else {
+                imageView.setImageResource(R.drawable.image_placeholder)  // Immagine predefinita se non c'è fotoUrl
+            }
+
+            setOnClickListener {
+                val intent = Intent(this@PreferiteActivity, RicettaActivity::class.java)
+                intent.putExtra("RICETTA", ricetta)
+                intent.putExtra("USERNAME", username)
+                startActivity(intent)
+            }
+        }
+        return cardView
     }
 }
