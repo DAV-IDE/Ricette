@@ -10,7 +10,8 @@ data class Ricette(
     var unita: List<String> = emptyList(),
     var procedimento: String = "",
     var fotoUrl: String = "",
-    var username: String = ""
+    var username: String = "",
+    var recipeId: String = "" // Assicurarsi che questo campo sia incluso
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
@@ -19,7 +20,8 @@ data class Ricette(
         parcel.createStringArrayList() ?: emptyList(),
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readString() ?: ""
+        parcel.readString() ?: "",
+        parcel.readString() ?: "" // Legge il recipeId dal Parcel
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -30,6 +32,7 @@ data class Ricette(
         parcel.writeString(procedimento)
         parcel.writeString(fotoUrl)
         parcel.writeString(username)
+        parcel.writeString(recipeId) // Scrive il recipeId nel Parcel
     }
 
     override fun describeContents(): Int {

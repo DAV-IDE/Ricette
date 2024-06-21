@@ -52,12 +52,17 @@ class MieRicetteActivity : AppCompatActivity() {
                 val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
                 container.removeAllViews() // Clear existing views
 
-                for (recipeSnapshot in snapshot.children) {
-                    val ricetta = recipeSnapshot.getValue(Ricette::class.java)
-                    ricetta?.let {
-                        Log.d(TAG, "Creating card for recipe: ${it.nome}")
-                        val cardView = createCardView(it, recipeSnapshot.key!!)
-                        container.addView(cardView)
+                if (snapshot.childrenCount.toInt() == 0) {
+                    val noRecipesView = LayoutInflater.from(this@MieRicetteActivity).inflate(R.layout.no_yours_message, container, false)
+                    container.addView(noRecipesView)
+                } else {
+                    for (recipeSnapshot in snapshot.children) {
+                        val ricetta = recipeSnapshot.getValue(Ricette::class.java)
+                        ricetta?.let {
+                            Log.d(TAG, "Creating card for recipe: ${it.nome}")
+                            val cardView = createCardView(it, recipeSnapshot.key!!)
+                            container.addView(cardView)
+                        }
                     }
                 }
             }
@@ -129,5 +134,11 @@ class MieRicetteActivity : AppCompatActivity() {
     private fun removeCardView(cardView: CardView) {
         val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
         container.removeView(cardView)
+
+        // Check if there are no more recipes
+        if (container.childCount == 0) {
+            val noRecipesView = LayoutInflater.from(this).inflate(R.layout.no_yours_message, container, false)
+            container.addView(noRecipesView)
+        }
     }
 }
