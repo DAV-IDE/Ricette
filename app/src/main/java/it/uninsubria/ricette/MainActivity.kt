@@ -34,9 +34,5 @@ class MainActivity : AppCompatActivity() {
     fun registrati(view: View){
         val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
         startActivity(intent)
-//        val database = FirebaseDatabase.getInstance()
-//        val myRef = database.getReference("message")
-//
-//        myRef.setValue("Hello, World!")
     }
 }
