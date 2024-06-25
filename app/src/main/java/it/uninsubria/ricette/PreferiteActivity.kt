@@ -130,7 +130,7 @@ class PreferiteActivity : AppCompatActivity() {
             }
 
             val buttonPreferito = findViewById<ImageButton>(R.id.buttonPreferito)
-            buttonPreferito.isSelected = true
+            buttonPreferito.isSelected = true // Set the button as selected (yellow)
             buttonPreferito.setOnClickListener {
                 toggleRecipeFavoriteStatus(ricetta, buttonPreferito, cardView)
             }
@@ -166,7 +166,7 @@ class PreferiteActivity : AppCompatActivity() {
             }
             val buttonPreferito = findViewById<ImageButton>(R.id.buttonPreferito)
             buttonPreferito.visibility = View.VISIBLE
-            buttonPreferito.isSelected = false
+            buttonPreferito.isSelected = true // Set the button as selected (yellow)
             buttonPreferito.setOnClickListener {
                 toggleRecipeFavoriteStatus(null, buttonPreferito, cardView)
             }
