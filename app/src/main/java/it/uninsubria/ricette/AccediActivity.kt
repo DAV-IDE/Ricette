@@ -43,14 +43,12 @@ class AccediActivity : AppCompatActivity() {
             return
         }
 
-        // Cerca utente per username, email o numero di telefono
         val query: Query = firebaseRef.orderByChild("numeroTelOrEmail").equalTo(input)
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     verifyUserAndPassword(snapshot, password)
                 } else {
-                    // Cerca per username se il primo campo non corrisponde a numeroTelOrEmail
                     firebaseRef.orderByChild("username").equalTo(input).addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(usernameSnapshot: DataSnapshot) {
                             if (usernameSnapshot.exists()) {

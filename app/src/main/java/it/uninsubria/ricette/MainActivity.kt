@@ -3,15 +3,10 @@ package it.uninsubria.ricette
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.firebase.Firebase
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.database
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,9 +29,5 @@ class MainActivity : AppCompatActivity() {
     fun registrati(view: View){
         val intent = Intent (this@MainActivity, RegistrazioneActivity2 :: class.java)
         startActivity(intent)
-//        val database = FirebaseDatabase.getInstance()
-//        val myRef = database.getReference("message")
-//
-//        myRef.setValue("Hello, World!")
     }
 }
