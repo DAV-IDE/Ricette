@@ -72,6 +72,12 @@ class PreferiteActivity : AppCompatActivity() {
         val recipeReference = FirebaseDatabase.getInstance().getReference("ricette").child(recipeId)
         recipeReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    val cardView = createDeletedRecipeCardView(recipeId)
+                    container.addView(cardView)
+                    return
+                }
+
                 val nome = dataSnapshot.child("nome").getValue(String::class.java) ?: ""
                 val ingredienti = dataSnapshot.child("ingredienti").getValue(object : GenericTypeIndicator<List<String>>() {}) ?: emptyList()
                 val quantita = dataSnapshot.child("quantita").getValue(object : GenericTypeIndicator<List<String>>() {}) ?: emptyList()
@@ -80,9 +86,14 @@ class PreferiteActivity : AppCompatActivity() {
                 val fotoUrl = dataSnapshot.child("fotoUrl").getValue(String::class.java) ?: ""
                 val recipeUsername = dataSnapshot.child("username").getValue(String::class.java) ?: ""
 
-                val ricetta = Ricette(nome, ingredienti, quantita, unita, procedimento, fotoUrl, recipeUsername, recipeId)
-                val cardView = createCardView(ricetta)
-                container.addView(cardView)
+                if (nome.isEmpty() && ingredienti.isEmpty() && quantita.isEmpty() && unita.isEmpty() && procedimento.isEmpty() && fotoUrl.isEmpty() && recipeUsername.isEmpty()) {
+                    val cardView = createDeletedRecipeCardView(recipeId)
+                    container.addView(cardView)
+                } else {
+                    val ricetta = Ricette(nome, ingredienti, quantita, unita, procedimento, fotoUrl, recipeUsername, recipeId)
+                    val cardView = createCardView(ricetta)
+                    container.addView(cardView)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -102,22 +113,22 @@ class PreferiteActivity : AppCompatActivity() {
         val margin = resources.getDimensionPixelSize(R.dimen.default_margin)
         layoutParams.setMargins(margin, margin, margin, margin)
         cardView.layoutParams = layoutParams
-        cardView.tag = ricetta.recipeId  // Imposta l'ID della ricetta come tag del cardView
+        cardView.tag = ricetta.recipeId  // Set the recipe ID as the tag for the CardView
 
         cardView.apply {
             findViewById<TextView>(R.id.textViewNomeRicetta).text = ricetta.nome
             findViewById<TextView>(R.id.textViewNomeUtente).text = ricetta.username
+
             val imageView = findViewById<ImageView>(R.id.imageViewRicetta)
             if (ricetta.fotoUrl.isNotEmpty()) {
                 Picasso.get()
                     .load(ricetta.fotoUrl)
-                    .placeholder(R.drawable.image_placeholder) // Immagine predefinita mentre l'immagine viene caricata
+                    .placeholder(R.drawable.image_placeholder) // Default image while the image is loading
                     .into(imageView)
             } else {
-                imageView.setImageResource(R.drawable.image_placeholder)  // Immagine predefinita se non c'è fotoUrl
+                imageView.setImageResource(R.drawable.image_placeholder)  // Default image if no URL
             }
 
-            // Imposta la stella del buttonPreferiti come gialla
             val buttonPreferito = findViewById<ImageButton>(R.id.buttonPreferito)
             buttonPreferito.isSelected = true
             buttonPreferito.setOnClickListener {
@@ -134,21 +145,49 @@ class PreferiteActivity : AppCompatActivity() {
         return cardView
     }
 
-    private fun toggleRecipeFavoriteStatus(ricetta: Ricette, button: ImageButton, cardView: CardView) {
-        username?.let {
-            val databaseReference = FirebaseDatabase.getInstance().getReference("preferiti").child(it).child(ricetta.recipeId)
+    private fun createDeletedRecipeCardView(recipeId: String): View {
+        val cardView = LayoutInflater.from(this).inflate(R.layout.recipe_card_view_template, null, false) as CardView
+
+        val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        val margin = resources.getDimensionPixelSize(R.dimen.default_margin)
+        layoutParams.setMargins(margin, margin, margin, margin)
+        cardView.layoutParams = layoutParams
+
+        cardView.apply {
+            findViewById<TextView>(R.id.textViewNomeRicetta).text = "Questa ricetta è stata eliminata dal suo creatore"
+            findViewById<TextView>(R.id.textViewNomeUtente).text = "Informazione non disponibile"
+            findViewById<ImageView>(R.id.imageViewRicetta).apply {
+                setImageResource(R.drawable.image_placeholder)
+                visibility = View.VISIBLE
+            }
+            val buttonPreferito = findViewById<ImageButton>(R.id.buttonPreferito)
+            buttonPreferito.visibility = View.VISIBLE
+            buttonPreferito.isSelected = false
+            buttonPreferito.setOnClickListener {
+                toggleRecipeFavoriteStatus(null, buttonPreferito, cardView)
+            }
+        }
+        cardView.tag = recipeId
+        return cardView
+    }
+
+    private fun toggleRecipeFavoriteStatus(ricetta: Ricette?, button: ImageButton, cardView: CardView) {
+        username?.let { usr ->
+            val recipeId = ricetta?.recipeId ?: cardView.tag as String
+            val databaseReference = FirebaseDatabase.getInstance().getReference("preferiti").child(usr).child(recipeId)
             databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        // Se la ricetta è già nei preferiti, rimuovila
                         databaseReference.removeValue().addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 button.isSelected = false
                                 Snackbar.make(findViewById(R.id.main), "Ricetta rimossa dai preferiti", Snackbar.LENGTH_SHORT).show()
-                                // Rimuovi la cardView dal container
                                 val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
                                 container.removeView(cardView)
-                                // Se non ci sono più ricette preferite, mostra il messaggio
                                 if (container.childCount == 0) {
                                     val noFavoritesView = LayoutInflater.from(this@PreferiteActivity).inflate(R.layout.no_favorites_message, container, false)
                                     container.addView(noFavoritesView)
@@ -156,6 +195,14 @@ class PreferiteActivity : AppCompatActivity() {
                             } else {
                                 Snackbar.make(findViewById(R.id.main), "Errore nella rimozione della ricetta dai preferiti", Snackbar.LENGTH_SHORT).show()
                             }
+                        }
+                    } else {
+                        // The recipe is no longer in favorites, just remove the view
+                        val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
+                        container.removeView(cardView)
+                        if (container.childCount == 0) {
+                            val noFavoritesView = LayoutInflater.from(this@PreferiteActivity).inflate(R.layout.no_favorites_message, container, false)
+                            container.addView(noFavoritesView)
                         }
                     }
                 }
