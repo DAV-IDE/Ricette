@@ -20,7 +20,6 @@ import com.squareup.picasso.Picasso
 class MieRicetteActivity : AppCompatActivity() {
 
     private var username: String? = null
-    private val TAG = "MieRicetteActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

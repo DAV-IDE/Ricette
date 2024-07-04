@@ -20,7 +20,6 @@ import com.squareup.picasso.Picasso
 class SceltaRicettaActivity : AppCompatActivity() {
 
     private var username: String? = null
-    private val tAG = "SceltaRicettaActivity"
     private val REQUEST_CODE = 1
     private lateinit var selectedIngredients: ArrayList<String>
 

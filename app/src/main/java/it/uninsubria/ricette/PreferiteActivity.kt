@@ -22,7 +22,6 @@ class PreferiteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPreferiteBinding
     private var username: String? = null
-    private val tAG = "PreferiteActivity"
     private val REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
