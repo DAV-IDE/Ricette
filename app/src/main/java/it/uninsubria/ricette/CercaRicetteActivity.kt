@@ -53,16 +53,17 @@ class CercaRicetteActivity : AppCompatActivity() {
             "Fegato", "Finocchio", "Formaggio", "Fragola", "Frumento", "Fungi", "Fungo", "Gelato",
             "Girasole", "Granchio", "Insalata", "Kiwi", "Lampone", "Latte", "Lattuga",
             "Limone", "Litchi", "Lievito Per Dolci", "Maiale", "Mais", "Mandarino", "Mango",
-            "Melanzana", "Melone", "Menta", "Merluzzo", "Miele", "Mirtilli", "Nocciola",
+            "Mascarpone", "Melanzana", "Melone", "Menta", "Merluzzo", "Miele", "Mirtilli", "Nocciola",
             "Noce", "Noce Moscata", "Olio", "Oliva", "Origano", "Orzo", "Pane", "Panna",
             "Papaya", "Paprika", "Pasta", "Patata", "Pepe", "Pepe Bianco", "Pepe Di Cayenna",
             "Pepe Nero", "Pepe Rosa", "Peperoncino", "Peperoncino In Polvere", "Peperoni",
             "Pesca", "Pesce Spada", "Petto Di Pollo", "Piadina", "Pistacchio", "Polenta",
             "Pollo", "Pomodori", "Prezzemolo", "Prosciutto", "Prugna", "Quinoa", "Radicchio",
-            "Riso", "Rosmarino", "Salmone", "Sale", "Salsiccia", "Sedano", "Semi Di Papavero",
+            "Riso", "Rosmarino", "Sale", "Salmone", "Salsiccia", "Savoiardi", "Sedano", "Semi Di Papavero",
             "Sesamo", "Spinaci", "Tacchino", "Timo", "Tonno", "Uova", "Uva", "Uva Passa",
             "Vaniglia", "Verza", "Vongole", "Yogurt", "Zafferano", "Zenzero", "Zucca",
-            "Zucchero", "Zucchine"
+            "Zucchero", "Zucchero a velo", "Zucchine"
+
         )
 
         filteredIngredients = ArrayList(ingredients)

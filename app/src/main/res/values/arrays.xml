@@ -68,6 +68,7 @@
             <item>Mais</item>
             <item>Mandarino</item>
             <item>Mango</item>
+            <item>Mascarpone</item>
             <item>Melanzana</item>
             <item>Melone</item>
             <item>Menta</item>
@@ -113,6 +114,7 @@
             <item>Salmone</item>
             <item>Sale</item>
             <item>Salsiccia</item>
+            <item>Savoiardi</item>
             <item>Sedano</item>
             <item>Semi di papavero</item>
             <item>Sesamo</item>
@@ -131,6 +133,7 @@
             <item>Zenzero</item>
             <item>Zucca</item>
             <item>Zucchero</item>
+            <item>Zucchero a velo</item>
             <item>Zucchine</item>
         </string-array>
 
