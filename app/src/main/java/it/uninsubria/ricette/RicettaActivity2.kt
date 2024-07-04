@@ -42,10 +42,10 @@ class RicettaActivity2 : AppCompatActivity() {
                 binding.imageViewFromDB2.setImageResource(R.drawable.image_placeholder)
             }
 
-            // Display the procedure
+
             binding.textViewPDB2.text = ricetta.procedimento
 
-            // Dynamically add ingredients, quantities, and units of measure
+
             val ingredientsContainer = findViewById<LinearLayout>(R.id.ingredients_container2)
             for (i in ricetta.ingredienti.indices) {
                 val ingredientView = LayoutInflater.from(this).inflate(R.layout.ingredient_item, ingredientsContainer, false)
@@ -61,7 +61,7 @@ class RicettaActivity2 : AppCompatActivity() {
             }
         }
 
-        // Handle the window insets
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -102,6 +102,6 @@ class RicettaActivity2 : AppCompatActivity() {
     private fun finishActivityWithDelay() {
         android.os.Handler(mainLooper).postDelayed({
             finish()
-        }, 3000) // 3000 milliseconds delay
+        }, 3000)
     }
 }

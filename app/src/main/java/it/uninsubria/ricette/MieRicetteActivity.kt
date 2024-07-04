@@ -36,7 +36,7 @@ class MieRicetteActivity : AppCompatActivity() {
         Log.d(TAG, "Username received: $username")
         if (username == null) {
             Log.e(TAG, "No username provided, exiting activity.")
-            finish()  // Close activity if no username is provided.
+            finish()
             return
         }
 
@@ -135,7 +135,7 @@ class MieRicetteActivity : AppCompatActivity() {
         val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
         container.removeView(cardView)
 
-        // Check if there are no more recipes
+
         if (container.childCount == 0) {
             val noRecipesView = LayoutInflater.from(this).inflate(R.layout.no_yours_message, container, false)
             container.addView(noRecipesView)

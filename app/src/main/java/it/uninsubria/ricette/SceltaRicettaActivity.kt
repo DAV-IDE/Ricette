@@ -115,7 +115,7 @@ class SceltaRicettaActivity : AppCompatActivity() {
                 imageView.setImageResource(R.drawable.image_placeholder)  // Immagine predefinita se non c'è fotoUrl
             }
 
-            // Aggiungi il pulsante preferiti e il relativo listener
+            // Aggiunge il pulsante preferiti e il relativo listener
             val buttonPreferito = findViewById<ImageButton>(R.id.buttonPreferito)
             checkIfRecipeIsFavorite(ricetta.recipeId, buttonPreferito)
             buttonPreferito.setOnClickListener {
@@ -138,7 +138,7 @@ class SceltaRicettaActivity : AppCompatActivity() {
             databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        // Se la ricetta è già nei preferiti, rimuovila
+                        // Se la ricetta è già nei preferiti, si rimuove
                         databaseReference.removeValue().addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 button.isSelected = false
@@ -148,7 +148,7 @@ class SceltaRicettaActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        // Se la ricetta non è nei preferiti, aggiungila
+                        // Se la ricetta non è nei preferiti, viene aggiunta
                         databaseReference.setValue(true).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 button.isSelected = true
