@@ -138,8 +138,6 @@ class CercaRicetteActivity : AppCompatActivity() {
         if (searchText != null) {
             searchText.setTextColor(textColor)
             searchText.setHintTextColor(hintColor)
-        } else {
-            Log.e("CercaRicetteActivity", "searchText è null")
         }
     }
 
@@ -154,8 +152,6 @@ class CercaRicetteActivity : AppCompatActivity() {
             val iconView = searchView.findViewById<ImageView>(iconViewId)
             if (iconView != null) {
                 iconView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-            } else {
-                Log.e("CercaRicetteActivity", "$iconId è null")
             }
         }
     }

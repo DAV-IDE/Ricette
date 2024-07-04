@@ -47,7 +47,6 @@ class PreferiteActivity : AppCompatActivity() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
                     container.removeAllViews()
-                    Log.d(tAG, "DataSnapshot children count: ${dataSnapshot.childrenCount}")
 
                     if (dataSnapshot.childrenCount.toInt() == 0) {
                         val noFavoritesView = LayoutInflater.from(this@PreferiteActivity).inflate(R.layout.no_favorites_message, container, false)
@@ -62,7 +61,6 @@ class PreferiteActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e(tAG, "Database error: ${databaseError.message}")
                 }
             })
         }
@@ -97,7 +95,7 @@ class PreferiteActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(tAG, "Database error: ${databaseError.message}")
+
             }
         })
     }
@@ -208,7 +206,6 @@ class PreferiteActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e(tAG, "Database error: ${databaseError.message}")
                 }
             })
         }

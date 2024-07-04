@@ -37,7 +37,6 @@ class SceltaRicettaActivity : AppCompatActivity() {
         username = intent.getStringExtra("USERNAME")
 
         selectedIngredients = intent.getStringArrayListExtra("SELECTED_INGREDIENTS") ?: return
-        Log.d(tAG, "Selected ingredients: $selectedIngredients")
         fetchRecipes(selectedIngredients)
     }
 
@@ -51,8 +50,7 @@ class SceltaRicettaActivity : AppCompatActivity() {
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val container = findViewById<LinearLayout>(R.id.linear_layout_container)
-                container.removeAllViews()  // Clear existing views if needed
-                Log.d(tAG, "DataSnapshot children count: ${dataSnapshot.childrenCount}")
+                container.removeAllViews()
 
                 var foundRecipe = false
                 for (recipeSnapshot in dataSnapshot.children) {
@@ -66,14 +64,11 @@ class SceltaRicettaActivity : AppCompatActivity() {
                     val recipeId = recipeSnapshot.key ?: ""
 
                     val ricetta = Ricette(nome, ingredienti, quantita, unita, procedimento, fotoUrl, recipeUsername, recipeId)
-                    Log.d(tAG, "Ricetta: $ricetta")
 
                     if (ingredients.all { ricetta.ingredienti.contains(it) }) {
                         foundRecipe = true
-                        Log.d(tAG, "Matching recipe found: ${ricetta.nome}")
                         val cardView = createCardView(ricetta)
                         container.addView(cardView)
-                        Log.d(tAG, "CardView added for recipe: ${ricetta.nome}")
                     }
                 }
 
@@ -84,7 +79,6 @@ class SceltaRicettaActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(tAG, "Database error: ${databaseError.message}")
             }
         })
     }
@@ -161,7 +155,6 @@ class SceltaRicettaActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e(tAG, "Database error: ${databaseError.message}")
                 }
             })
         }
@@ -176,7 +169,6 @@ class SceltaRicettaActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e(tAG, "Database error: ${databaseError.message}")
                 }
             })
         }
