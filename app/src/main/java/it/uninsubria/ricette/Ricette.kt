@@ -11,7 +11,7 @@ data class Ricette(
     var procedimento: String = "",
     var fotoUrl: String = "",
     var username: String = "",
-    var recipeId: String = "" // Assicurarsi che questo campo sia incluso
+    var recipeId: String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",

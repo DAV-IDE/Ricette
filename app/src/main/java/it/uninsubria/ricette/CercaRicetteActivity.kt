@@ -44,27 +44,25 @@ class CercaRicetteActivity : AppCompatActivity() {
 
         ingredients = arrayListOf(
             "Acqua", "Aglio", "Agnello", "Albicocca", "Alloro", "Aloe", "Ananas",
-            "Anatra", "Aneto", "Arachidi", "Arancia", "Asparagi",
-            "Avocado", "Basilico", "Biancospino", "Broccoli", "Burro",
-            "Cacao", "Cannella", "Cardamomo", "Carciofi", "Carne Di Manzo",
-            "Carote", "Cavolfiore", "Cavolo", "Cavolo Riccio", "Cedro",
-            "Cetriolo", "Chiodi Di Garofano", "Cipolla", "Coriandolo",
-            "Couscous", "Cumino", "Curcuma", "Datteri", "Dragoncello",
-            "Fagioli", "Fagiolini", "Farina", "Fegato", "Finocchio",
-            "Formaggio", "Fragola", "Frumento", "Fungi", "Gelato",
-            "Girasole", "Granchio", "Insalata", "Kiwi", "Lampone",
-            "Latte", "Lattuga", "Limone", "Litchi", "Maiale", "Mais",
-            "Mandarino", "Mango", "Melanzana", "Melone", "Menta", "Merluzzo",
-            "Miele", "Mirtilli", "Nocciola", "Noce", "Noce Moscata","Olio", "Oliva",
-            "Origano", "Orzo", "Pane", "Panna", "Papaya", "Paprika", "Pasta",
-            "Patata", "Pepe", "Pepe Bianco", "Pepe Di Cayenna", "Pepe Nero",
-            "Pepe Rosa", "Peperoncino", "Peperoncino In Polvere", "Peperoni",
-            "Pesca", "Pesce Spada", "Petto Di Pollo", "Piadina", "Pistacchio",
-            "Polenta", "Pollo", "Pomodori", "Prezzemolo", "Prosciutto", "Prugna",
-            "Quinoa", "Radicchio", "Riso", "Rosmarino", "Salmone", "Sale", "Salsiccia",
-            "Sedano", "Semi Di Papavero", "Sesamo", "Spinaci", "Tacchino",
-            "Timo", "Tonno", "Uva", "Uva Passa", "Vaniglia", "Verza", "Vongole",
-            "Yogurt", "Zafferano", "Zenzero", "Zucca", "Zucchero", "Zucchine"
+            "Anatra", "Aneto", "Arachidi", "Arancia", "Asparagi", "Avocado", "Basilico",
+            "Biancospino", "Broccoli", "Burro", "Cacao", "Cacao Amaro", "Cannella",
+            "Cardamomo", "Carciofi", "Carne Di Manzo", "Carote", "Cavolfiore", "Cavolo",
+            "Cavolo Riccio", "Cedro", "Cetriolo", "Chiodi Di Garofano", "Cioccolato Fondente",
+            "Cipolla", "Coriandolo", "Couscous", "Cumino", "Curcuma", "Datteri",
+            "Dragoncello", "Fagioli", "Fagiolini", "Farina", "Farina 00", "Farina Integrale",
+            "Fegato", "Finocchio", "Formaggio", "Fragola", "Frumento", "Fungi", "Fungo", "Gelato",
+            "Girasole", "Granchio", "Insalata", "Kiwi", "Lampone", "Latte", "Lattuga",
+            "Limone", "Litchi", "Lievito Per Dolci", "Maiale", "Mais", "Mandarino", "Mango",
+            "Melanzana", "Melone", "Menta", "Merluzzo", "Miele", "Mirtilli", "Nocciola",
+            "Noce", "Noce Moscata", "Olio", "Oliva", "Origano", "Orzo", "Pane", "Panna",
+            "Papaya", "Paprika", "Pasta", "Patata", "Pepe", "Pepe Bianco", "Pepe Di Cayenna",
+            "Pepe Nero", "Pepe Rosa", "Peperoncino", "Peperoncino In Polvere", "Peperoni",
+            "Pesca", "Pesce Spada", "Petto Di Pollo", "Piadina", "Pistacchio", "Polenta",
+            "Pollo", "Pomodori", "Prezzemolo", "Prosciutto", "Prugna", "Quinoa", "Radicchio",
+            "Riso", "Rosmarino", "Salmone", "Sale", "Salsiccia", "Sedano", "Semi Di Papavero",
+            "Sesamo", "Spinaci", "Tacchino", "Timo", "Tonno", "Uova", "Uva", "Uva Passa",
+            "Vaniglia", "Verza", "Vongole", "Yogurt", "Zafferano", "Zenzero", "Zucca",
+            "Zucchero", "Zucchine"
         )
 
         filteredIngredients = ArrayList(ingredients)
@@ -140,16 +138,13 @@ class CercaRicetteActivity : AppCompatActivity() {
         if (searchText != null) {
             searchText.setTextColor(textColor)
             searchText.setHintTextColor(hintColor)
-        } else {
-            Log.e("CercaRicetteActivity", "searchText è null")
         }
     }
 
     private fun changeSearchViewIconColor(searchView: SearchView, color: Int) {
         val iconIds = listOf(
-            "android:id/search_button", // Lente di ingrandimento
-            "android:id/search_close_btn", // Bottone di chiusura
-            "android:id/search_voice_btn"  // Icona del microfono
+            "android:id/search_button",
+            "android:id/search_close_btn",
         )
 
         for (iconId in iconIds) {
@@ -157,8 +152,6 @@ class CercaRicetteActivity : AppCompatActivity() {
             val iconView = searchView.findViewById<ImageView>(iconViewId)
             if (iconView != null) {
                 iconView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-            } else {
-                Log.e("CercaRicetteActivity", "$iconId è null")
             }
         }
     }

@@ -33,10 +33,8 @@ class MieRicetteActivity : AppCompatActivity() {
         }
 
         username = intent.getStringExtra("USERNAME")
-        Log.d(TAG, "Username received: $username")
         if (username == null) {
-            Log.e(TAG, "No username provided, exiting activity.")
-            finish()  // Close activity if no username is provided.
+            finish()
             return
         }
 
@@ -50,7 +48,7 @@ class MieRicetteActivity : AppCompatActivity() {
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
-                container.removeAllViews() // Clear existing views
+                container.removeAllViews()
 
                 if (snapshot.childrenCount.toInt() == 0) {
                     val noRecipesView = LayoutInflater.from(this@MieRicetteActivity).inflate(R.layout.no_yours_message, container, false)
@@ -59,7 +57,6 @@ class MieRicetteActivity : AppCompatActivity() {
                     for (recipeSnapshot in snapshot.children) {
                         val ricetta = recipeSnapshot.getValue(Ricette::class.java)
                         ricetta?.let {
-                            Log.d(TAG, "Creating card for recipe: ${it.nome}")
                             val cardView = createCardView(it, recipeSnapshot.key!!)
                             container.addView(cardView)
                         }
@@ -68,7 +65,6 @@ class MieRicetteActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e(TAG, "Database error: ${error.message}")
             }
         })
     }
@@ -135,7 +131,7 @@ class MieRicetteActivity : AppCompatActivity() {
         val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
         container.removeView(cardView)
 
-        // Check if there are no more recipes
+
         if (container.childCount == 0) {
             val noRecipesView = LayoutInflater.from(this).inflate(R.layout.no_yours_message, container, false)
             container.addView(noRecipesView)

@@ -22,7 +22,7 @@ class SceltaActivity : AppCompatActivity() {
             insets
         }
 
-        // Recupera lo username dall'intento
+        // Recupera lo username dall'intent
         username = intent.getStringExtra("USERNAME")
     }
 

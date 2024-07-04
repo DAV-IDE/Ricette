@@ -59,7 +59,7 @@ class RicettaActivity : AppCompatActivity() {
                 ingredientsContainer.addView(ingredientView)
             }
 
-            // Aggiungi il listener per il pulsante preferiti
+
             val buttonPreferito2 = binding.buttonPreferito2
             checkIfRecipeIsFavorite(ricetta.recipeId, buttonPreferito2)
             buttonPreferito2.setOnClickListener {
@@ -74,7 +74,7 @@ class RicettaActivity : AppCompatActivity() {
             databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        // Se la ricetta è già nei preferiti, rimuovila
+
                         databaseReference.removeValue().addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 button.isSelected = false
@@ -86,7 +86,7 @@ class RicettaActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        // Se la ricetta non è nei preferiti, aggiungila
+
                         databaseReference.setValue(true).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 button.isSelected = true
@@ -101,7 +101,7 @@ class RicettaActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    // Handle error
+
                 }
             })
         }
@@ -117,7 +117,7 @@ class RicettaActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    // Handle error
+
                 }
             })
         }

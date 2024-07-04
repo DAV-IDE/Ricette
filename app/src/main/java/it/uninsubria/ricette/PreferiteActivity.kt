@@ -46,8 +46,7 @@ class PreferiteActivity : AppCompatActivity() {
             databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
-                    container.removeAllViews()  // Clear existing views if needed
-                    Log.d(tAG, "DataSnapshot children count: ${dataSnapshot.childrenCount}")
+                    container.removeAllViews()
 
                     if (dataSnapshot.childrenCount.toInt() == 0) {
                         val noFavoritesView = LayoutInflater.from(this@PreferiteActivity).inflate(R.layout.no_favorites_message, container, false)
@@ -62,7 +61,6 @@ class PreferiteActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e(tAG, "Database error: ${databaseError.message}")
                 }
             })
         }
@@ -97,7 +95,7 @@ class PreferiteActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(tAG, "Database error: ${databaseError.message}")
+
             }
         })
     }
@@ -113,7 +111,7 @@ class PreferiteActivity : AppCompatActivity() {
         val margin = resources.getDimensionPixelSize(R.dimen.default_margin)
         layoutParams.setMargins(margin, margin, margin, margin)
         cardView.layoutParams = layoutParams
-        cardView.tag = ricetta.recipeId  // Set the recipe ID as the tag for the CardView
+        cardView.tag = ricetta.recipeId
 
         cardView.apply {
             findViewById<TextView>(R.id.textViewNomeRicetta).text = ricetta.nome
@@ -123,14 +121,14 @@ class PreferiteActivity : AppCompatActivity() {
             if (ricetta.fotoUrl.isNotEmpty()) {
                 Picasso.get()
                     .load(ricetta.fotoUrl)
-                    .placeholder(R.drawable.image_placeholder) // Default image while the image is loading
+                    .placeholder(R.drawable.image_placeholder)
                     .into(imageView)
             } else {
-                imageView.setImageResource(R.drawable.image_placeholder)  // Default image if no URL
+                imageView.setImageResource(R.drawable.image_placeholder)
             }
 
             val buttonPreferito = findViewById<ImageButton>(R.id.buttonPreferito)
-            buttonPreferito.isSelected = true // Set the button as selected (yellow)
+            buttonPreferito.isSelected = true
             buttonPreferito.setOnClickListener {
                 toggleRecipeFavoriteStatus(ricetta, buttonPreferito, cardView)
             }
@@ -166,7 +164,7 @@ class PreferiteActivity : AppCompatActivity() {
             }
             val buttonPreferito = findViewById<ImageButton>(R.id.buttonPreferito)
             buttonPreferito.visibility = View.VISIBLE
-            buttonPreferito.isSelected = true // Set the button as selected (yellow)
+            buttonPreferito.isSelected = true
             buttonPreferito.setOnClickListener {
                 toggleRecipeFavoriteStatus(null, buttonPreferito, cardView)
             }
@@ -197,7 +195,7 @@ class PreferiteActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        // The recipe is no longer in favorites, just remove the view
+
                         val container = findViewById<LinearLayout>(R.id.linear_layout_container2)
                         container.removeView(cardView)
                         if (container.childCount == 0) {
@@ -208,7 +206,6 @@ class PreferiteActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.e(tAG, "Database error: ${databaseError.message}")
                 }
             })
         }
