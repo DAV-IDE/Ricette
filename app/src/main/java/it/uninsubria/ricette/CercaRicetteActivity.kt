@@ -145,9 +145,8 @@ class CercaRicetteActivity : AppCompatActivity() {
 
     private fun changeSearchViewIconColor(searchView: SearchView, color: Int) {
         val iconIds = listOf(
-            "android:id/search_button", // Lente di ingrandimento
-            "android:id/search_close_btn", // Bottone di chiusura
-            "android:id/search_voice_btn"  // Icona del microfono
+            "android:id/search_button",
+            "android:id/search_close_btn",
         )
 
         for (iconId in iconIds) {
