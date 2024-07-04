@@ -45,7 +45,7 @@ class CercaRicetteActivity : AppCompatActivity() {
         ingredients = arrayListOf(
             "Acqua", "Aglio", "Agnello", "Albicocca", "Alloro", "Aloe", "Ananas",
             "Anatra", "Aneto", "Arachidi", "Arancia", "Asparagi", "Avocado", "Basilico",
-            "Biancospino", "Broccoli", "Burro", "Cacao", "Cacao Amaro", "Cannella",
+            "Biancospino", "Broccoli", "Burro", "Cacao", "Cacao Amaro", "Caffe", "Cannella",
             "Cardamomo", "Carciofi", "Carne Di Manzo", "Carote", "Cavolfiore", "Cavolo",
             "Cavolo Riccio", "Cedro", "Cetriolo", "Chiodi Di Garofano", "Cioccolato Fondente",
             "Cipolla", "Coriandolo", "Couscous", "Cumino", "Curcuma", "Datteri",
