@@ -20,6 +20,7 @@
             <item>Broccoli</item>
             <item>Burro</item>
             <item>Cacao</item>
+            <item>Cacao Amaro</item>
             <item>Cannella</item>
             <item>Cardamomo</item>
             <item>Carciofi</item>
@@ -31,6 +32,7 @@
             <item>Cedro</item>
             <item>Cetriolo</item>
             <item>Chiodi di garofano</item>
+            <item>Cioccolato Fondente</item>
             <item>Cipolla</item>
             <item>Coriandolo</item>
             <item>Couscous</item>
@@ -41,12 +43,15 @@
             <item>Fagioli</item>
             <item>Fagiolini</item>
             <item>Farina</item>
+            <item>Farina 00</item>
+            <item>Farina Integrale</item>
             <item>Fegato</item>
             <item>Finocchio</item>
             <item>Formaggio</item>
             <item>Fragola</item>
             <item>Frumento</item>
             <item>Fungi</item>
+            <item>Fungo</item>
             <item>Gelato</item>
             <item>Girasole</item>
             <item>Granchio</item>
@@ -57,6 +62,7 @@
             <item>Lattuga</item>
             <item>Limone</item>
             <item>Litchi</item>
+            <item>Lievito Per Dolci</item>
             <item>Maiale</item>
             <item>Mais</item>
             <item>Mandarino</item>

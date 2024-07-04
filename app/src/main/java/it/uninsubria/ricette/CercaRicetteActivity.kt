@@ -50,7 +50,7 @@ class CercaRicetteActivity : AppCompatActivity() {
             "Cavolo Riccio", "Cedro", "Cetriolo", "Chiodi Di Garofano", "Cioccolato Fondente",
             "Cipolla", "Coriandolo", "Couscous", "Cumino", "Curcuma", "Datteri",
             "Dragoncello", "Fagioli", "Fagiolini", "Farina", "Farina 00", "Farina Integrale",
-            "Fegato", "Finocchio", "Formaggio", "Fragola", "Frumento", "Fungi", "Gelato",
+            "Fegato", "Finocchio", "Formaggio", "Fragola", "Frumento", "Fungi", "Fungo", "Gelato",
             "Girasole", "Granchio", "Insalata", "Kiwi", "Lampone", "Latte", "Lattuga",
             "Limone", "Litchi", "Lievito Per Dolci", "Maiale", "Mais", "Mandarino", "Mango",
             "Melanzana", "Melone", "Menta", "Merluzzo", "Miele", "Mirtilli", "Nocciola",
