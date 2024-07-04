@@ -135,10 +135,9 @@ class CreaRicetteActivity : AppCompatActivity() {
         val snackbar = Snackbar.make(layout, "Ricetta salvata con successo", Snackbar.LENGTH_LONG)
         snackbar.show()
 
-        // Delay for a few seconds and then finish the activity
         Handler(Looper.getMainLooper()).postDelayed({
             finish()
-        }, 3000) // 3000 milliseconds delay
+        }, 3000)
     }
 
     private fun setupImagePicker() {
@@ -222,7 +221,7 @@ class CreaRicetteActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                // Opzionale: cosa fare quando non viene selezionato nulla
+                // cosa fare quando non viene selezionato nulla
             }
         }
     }
@@ -311,7 +310,7 @@ class CreaRicetteActivity : AppCompatActivity() {
             ConstraintSet.TOP,
             lastComponentId,
             ConstraintSet.BOTTOM,
-            44  // Margine verticale tra i gruppi
+            44
         )
 
         // Connessione dell'EditText della quantità
@@ -354,31 +353,31 @@ class CreaRicetteActivity : AppCompatActivity() {
             ConstraintSet.TOP
         )
 
-        // Aggiorna i vincoli per addButton per spostarlo sotto l'ultimo spinner unit
+
         constraintSet.connect(
             R.id.addButton,
             ConstraintSet.TOP,
             spinnerUnits.id,
             ConstraintSet.BOTTOM,
-            20  // Margine di 20dp dall'ultimo componente
+            20
         )
 
-        // Aggiorna il vincolo di textViewProcedimento per ancorarlo sotto addButton
+
         constraintSet.connect(
             R.id.textViewProcedimento,
             ConstraintSet.TOP,
             R.id.addButton,
             ConstraintSet.BOTTOM,
-            20  // Margine di 20dp da addButton
+            20
         )
 
-        // Aggiorna il vincolo di editTextProcedimento per ancorarlo sotto textViewProcedimento
+
         constraintSet.connect(
             R.id.editTextProcedimento,
             ConstraintSet.TOP,
             R.id.textViewProcedimento,
             ConstraintSet.BOTTOM,
-            8  // Margine di 8dp da textViewProcedimento
+            8
         )
 
         // Applica i vincoli ai nuovi componenti
