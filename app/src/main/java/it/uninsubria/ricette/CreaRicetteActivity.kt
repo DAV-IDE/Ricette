@@ -20,11 +20,10 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import com.google.firebase.storage.storage
+import com.google.firebase.ktx.Firebase
 
 class CreaRicetteActivity : AppCompatActivity() {
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
@@ -119,6 +118,7 @@ class CreaRicetteActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance().reference
         val ricettaId = database.child("ricette").push().key
         if (ricettaId != null) {
+            ricetta.recipeId = ricettaId // Imposta l'ID della ricetta
             database.child("ricette").child(ricettaId).setValue(ricetta)
                 .addOnSuccessListener {
                     showSnackbarAndReturn()
