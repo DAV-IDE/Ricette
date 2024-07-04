@@ -40,10 +40,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Questo LinearLayout sarà il contenitore per le CardView generate dinamicamente -->
 
         </LinearLayout>
-        <!-- Here you can dynamically add your CardViews -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
